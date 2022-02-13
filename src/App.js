@@ -1,7 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
+import { useData, getItemsFromUser } from './firebase';
 
 function App() {
+  const [data, loading, error] = useData('/');
+
+  if (error) return <h1>{error}</h1>;
+  if (loading) return <h1>Loading the schedule...</h1>
+
+  console.log(data);
+
   return (
     <div className="App">
       <header className="App-header">
