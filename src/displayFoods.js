@@ -28,16 +28,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(icon, name, expires) {
+  return {icon, name, expires};
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Bananas', 'Bananas', '2d'),
+  createData('Apples', 'Apples', '3w'),
+  createData('Lettuce', 'Lettuce', '4d'),
+  createData('Asparagus', 'Asparagus', 'EXPIRED'),
+  createData('Raspberries', 'Raspberries', '6d'),
+  createData('Potatoes', 'Potatoes', '1d'),
+  createData('Celery', 'Celery', '1w'),
 ];
 
 export default function DisplayFoods() {
@@ -46,21 +48,19 @@ export default function DisplayFoods() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Icon</StyledTableCell>
-            <StyledTableCell align="right">Name</StyledTableCell>
-            <StyledTableCell align="right">Expires</StyledTableCell>
+            <StyledTableCell align="center">Icon</StyledTableCell>
+            <StyledTableCell align="center">Name</StyledTableCell>
+            <StyledTableCell align="center">Expires</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
+            <StyledTableRow key={row.icon}>
+              <StyledTableCell align="center">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="center">{row.name}</StyledTableCell>
+              <StyledTableCell align="center">{row.expires}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
