@@ -1,24 +1,3 @@
-.navbar {
-    border-bottom: solid 1px #EBEBEB;
-}
-
-.bottom-tab-nav {
-    border-top: solid 1px #EBEBEB;
-}
-
-.nav-link,
-.bottom-nav-link {
-    color: #55575b;
-}
-
-.nav-link:focus, .nav-link:hover {
-    color: #1c3580;
-}
-
-.bottom-tab-label {
-    font-size: 12px;
-}
-
 .footer-margin {
-    height: env(safe-area-inset-bottom);
+	height: env(safe-area-inset-bottom);
 }

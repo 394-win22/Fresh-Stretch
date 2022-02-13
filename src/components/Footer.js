@@ -1,23 +1,20 @@
 import React from "react";
 import "./Footer.css";
+
 import { Link, useLocation } from "react-router-dom";
-import {
-	Checkroom,
-	Assistant,
-	Favorite,
-	AccountCircle,
-} from "@mui/icons-material";
+import { Home, AccountCircle } from "@mui/icons-material";
 
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import CssBaseline from "@mui/material/CssBaseline";
+
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Paper from "@mui/material/Paper";
 
 const tabs = [
 	{
 		route: "/",
-		icon: Checkroom,
+		icon: Home,
 		label: "Home",
 	},
 	{
@@ -27,7 +24,7 @@ const tabs = [
 	},
 ];
 
-function Footer() {
+const Footer = () => {
 	const { pathname } = useLocation();
 
 	let routeIndex = 0;
@@ -58,6 +55,12 @@ function Footer() {
 					onChange={(event, newValue) => {
 						setValue(newValue);
 					}}
+					sx={{
+						backgroundColor: "#FDA55D",
+						borderTop: 2,
+						borderColor: "#413529",
+						color: "#413529",
+					}}
 					showLabels
 				>
 					{tabs.map((tab, index) => {
@@ -77,6 +80,6 @@ function Footer() {
 			</Paper>
 		</Box>
 	);
-}
+};
 
 export default Footer;
