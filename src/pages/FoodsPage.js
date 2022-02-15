@@ -1,5 +1,5 @@
 import React from "react";
-import { useData, getItemsFromUser } from "../utils/firebase";
+import { userID, useData, getItemsFromUser } from "../utils/firebase";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -30,25 +30,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-function createData(icon, name, expires) {
-	return { icon, name, expires };
-}
-
-const rows = [
-	createData("Bananas", "Bananas", "2d"),
-	createData("Apples", "Apples", "3w"),
-	createData("Lettuce", "Lettuce", "4d"),
-	createData("Asparagus", "Asparagus", "EXPIRED"),
-	createData("Raspberries", "Raspberries", "6d"),
-	createData("Potatoes", "Potatoes", "1d"),
-	createData("Celery", "Celery", "1w"),
-];
+const CalculateExpirationDate = (timeAdded, shelfLife) => {
+	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
+	const expDate = new Date(timeAdded + shelfLife);
+};
 
 export default function DisplayFoods() {
-	const [data, loading, error] = useData("/");
+	const [userFood, userFoodLoading, userFoodError] = useData(
+		`/UserFood/${userID}`
+	);
 
-	if (error) return <h1>{error}</h1>;
-	if (loading) return <h1>Loading list of foods...</h1>;
+	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
+
+	if (userFoodError) return <h1>{userFoodError}</h1>;
+	if (userFoodLoading) return <h1>Loading list of foods...</h1>;
+
+	if (foodInfoError) return <h1>{foodInfoError}</h1>;
+	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
 	return (
 		<TableContainer component={Paper}>
@@ -63,16 +61,16 @@ export default function DisplayFoods() {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row) => (
-						<StyledTableRow key={row.icon}>
+					{Object.entries(userFood).map((item) => (
+						<StyledTableRow key={item.icon}>
 							<StyledTableCell align="center">
-								{row.name}
+								{item.flat()[0]}
 							</StyledTableCell>
 							<StyledTableCell align="center">
-								{row.name}
+								{item.flat()[0]}
 							</StyledTableCell>
 							<StyledTableCell align="center">
-								{row.expires}
+								expire
 							</StyledTableCell>
 						</StyledTableRow>
 					))}
