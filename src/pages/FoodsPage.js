@@ -69,7 +69,7 @@ export default function DisplayFoods() {
 
 	return (
 		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 700 }} aria-label="customized table">
+			<Table  aria-label="customized table">
 				<TableHead>
 					<TableRow>
 						<StyledTableCell align="center">Icon</StyledTableCell>
