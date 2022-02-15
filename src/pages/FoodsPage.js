@@ -1,5 +1,5 @@
 import React from "react";
-import { useData, getItemsFromUser } from "../firebase";
+import { useData, getItemsFromUser } from "../utils/firebase";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
