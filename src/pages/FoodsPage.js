@@ -30,25 +30,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	},
 }));
 
-const CalculateExpirationDate = (timeAdded, shelfLife) => {
+const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
 	const expDate = new Date(timeAdded + shelfLife);
 
-	let today = Date.now();
+	const today = Date.now();
+	const dif = expDate - today;
 
-	let dif = expDate - today;
-	let week = 1000 * 60 * 60 * 24 * 7;
-	let day = 1000 * 60 * 60 * 24;
+	const day = 1000 * 60 * 60 * 24;
+	const week = day * 7;
 
-	if (dif < 0){ console.log("EXPIRED"); return;}
-	if (dif > week) {
-		console.log("Over a week"); 
-		console.log(Math.floor(dif / week));
-		return;
+	if (dif < 0) {
+		return "EXPIRED";
+	} else if (dif > week) {
+		return Math.floor(dif / week) + "w";
+	} else {
+		const difDays = Math.floor(dif / day);
+		if (difDays === 0) {
+			return "TODAY";
+		} else {
+			return difDays + "d";
+		}
 	}
-
-	console.log("Days: ")
-	console.log(Math.floor(dif / day));
 };
 
 export default function DisplayFoods() {
@@ -78,10 +81,8 @@ export default function DisplayFoods() {
 				</TableHead>
 				<TableBody>
 					{Object.entries(userFood).map((item) => {
-						console.log(item);
-						CalculateExpirationDate(item[1]["TimeAdded"], foodInfo[item.flat()[0]]["ShelfLife"]);
 						return (
-							<StyledTableRow key={item.icon}>
+							<StyledTableRow key={item.flat()[0]}>
 								<StyledTableCell align="center">
 									{item.flat()[0]}
 								</StyledTableCell>
@@ -89,11 +90,14 @@ export default function DisplayFoods() {
 									{item.flat()[0]}
 								</StyledTableCell>
 								<StyledTableCell align="center">
-									expire
+									{CalculateExpiration(
+										item[1]["TimeAdded"],
+										foodInfo[item.flat()[0]]["ShelfLife"]
+									)}
 								</StyledTableCell>
 							</StyledTableRow>
 						);
-						})}
+					})}
 				</TableBody>
 			</Table>
 		</TableContainer>
