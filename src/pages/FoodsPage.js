@@ -47,7 +47,7 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	} else {
 		const difDays = Math.floor(dif / day);
 		if (difDays === 0) {
-			return "TODAY";
+			return <text style={{color:"#80b470", fontWeight:"600"}}>TODAY</text>;;
 		} else {
 			return difDays + "d";
 		}
