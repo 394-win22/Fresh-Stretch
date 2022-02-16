@@ -41,7 +41,7 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	const week = day * 7;
 
 	if (dif < 0) {
-		return "EXPIRED";
+		return <text style={{color:"#ff4d62", fontWeight:"600"}}>EXPIRED</text>;
 	} else if (dif > week) {
 		return Math.floor(dif / week) + "w";
 	} else {
