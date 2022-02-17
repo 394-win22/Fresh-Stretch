@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-//import {Dialog} from "@mui/material/Dialog"
 import {
 	Dialog,
 	DialogActions,
 	DialogContent,
 	DialogTitle,
 } from "@mui/material";
+import { Button } from "react-bootstrap";
 
 
 
@@ -19,12 +19,14 @@ const AddFood = () => {
         setOpen(false);
     };
     return(
-
-    <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add</DialogTitle>
-        <DialogContent>
-        </DialogContent>
-    </Dialog>
+    <>
+        <Button>Add Food</Button>
+        <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Add</DialogTitle>
+            <DialogContent>
+            </DialogContent>
+        </Dialog>
+    </>
 )
 }
 
