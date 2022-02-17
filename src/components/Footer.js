@@ -56,8 +56,8 @@ const Footer = () => {
 						setValue(newValue);
 					}}
 					sx={{
-						backgroundColor: "#ff914d",
-						borderTop: 2,
+						backgroundColor: "#E1DDD3",
+						borderTop: 0,
 						borderColor: "#302B2D",
 						color: "#413529",
 					}}
