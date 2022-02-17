@@ -9,6 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { getSvgIconUtilityClass } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -54,6 +55,14 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	}
 };
 
+const getSvgs=(base) =>{
+	var dataURI = 'data:image/svg+xml;base64,' + base;
+	console.log(base);
+	var svg = atob(base);
+	console.log(svg);
+	return (svg);
+}
+
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
@@ -83,7 +92,8 @@ Expires</StyledTableCell>
 						return (
 							<StyledTableRow key={item.flat()[0]}>
 								<StyledTableCell align="center">
-									{item.flat()[0]}
+									{<><svg>{(getSvgs(foodInfo[item.flat()[0]]["Icon"]))}</svg></>
+					}
 								</StyledTableCell>
 								<StyledTableCell align="center">
 									{item.flat()[0]}
