@@ -19,11 +19,13 @@ import Avatar from '@mui/material/Avatar';
 
 
 function CheckboxListSecondary({foodInfo}) {
-//   console.log(foodData);
-    const [checked, setChecked] = React.useState([1]);
+    foodInfo = Object.entries(foodInfo);
+    const [checked, setChecked] = React.useState([0]);
 
     const handleToggle = (value) => () => {
+        console.log("triggered", value);
         const currentIndex = checked.indexOf(value);
+        console.log(currentIndex);
         const newChecked = [...checked];
 
         if (currentIndex === -1) {
@@ -38,7 +40,6 @@ function CheckboxListSecondary({foodInfo}) {
     return (
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {Object.entries(foodInfo).map((value) => {
-            console.log(value)
             const labelId = `checkbox-list-secondary-label-${value}`;
             return (
             <ListItem
@@ -55,9 +56,9 @@ function CheckboxListSecondary({foodInfo}) {
             >
                 <ListItemButton>
                 <ListItemAvatar>
-                    <Avatar>{value[0][0]}</Avatar> 
+                    <Avatar>{value[1][0][0]}</Avatar> 
                 </ListItemAvatar>
-                <ListItemText id={labelId} primary={`${value[0]}`} />
+                <ListItemText id={labelId} primary={`${value[1][0]}`} />
                 </ListItemButton>
             </ListItem>
             );
