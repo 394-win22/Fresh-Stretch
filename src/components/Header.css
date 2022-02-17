@@ -1,0 +1,22 @@
+.header {
+	padding: 0.2rem;
+	font-family: "Prata", serif;
+	color: #302B2D;
+	background-color: #E1DDD3;
+	text-align: center;
+	z-index: 999;
+	position: fixed;
+	width: 100%;
+    top: 0px;
+
+}
+
+.header > h1 {
+	font-size: 25px;
+}
+
+.header-margin {
+	height: 5.5rem;
+	background-color: #E1DDD3;
+	border-bottom: 2px solid #413529;
+}
