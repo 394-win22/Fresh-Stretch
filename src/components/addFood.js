@@ -41,7 +41,7 @@ function CheckboxListSecondary({foodInfo}) {
             const labelId = `checkbox-list-secondary-label-${value}`;
             return (
             <ListItem
-                key={value}
+                key={value[0]}
                 secondaryAction={
                 <Checkbox
                     edge="end"
