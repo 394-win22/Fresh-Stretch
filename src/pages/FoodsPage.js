@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import AddFood from "../components/addFood.js"
+import AddFood from "../components/addFood.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -42,7 +42,9 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	const week = day * 7;
 
 	if (dif < 0) {
-		return <text style={{color:"#ff4d62", fontWeight:"600"}}>EXPIRED</text>;
+		return (
+			<span style={{ color: "#ff4d62", fontWeight: "600" }}>EXPIRED</span>
+		);
 	} else if (dif > week) {
 		return Math.floor(dif / week) + "w";
 	} else {
@@ -71,12 +73,18 @@ export default function DisplayFoods() {
 	return (
 		<>
 			<TableContainer component={Paper}>
-				<Table  aria-label="customized table">
+				<Table aria-label="customized table">
 					<TableHead>
 						<TableRow>
-							<StyledTableCell align="center">Icon</StyledTableCell>
-							<StyledTableCell align="center">Name</StyledTableCell>
-							<StyledTableCell align="center">Expires</StyledTableCell>
+							<StyledTableCell align="center">
+								Icon
+							</StyledTableCell>
+							<StyledTableCell align="center">
+								Name
+							</StyledTableCell>
+							<StyledTableCell align="center">
+								Expires
+							</StyledTableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -92,7 +100,9 @@ export default function DisplayFoods() {
 									<StyledTableCell align="center">
 										{CalculateExpiration(
 											item[1]["TimeAdded"],
-											foodInfo[item.flat()[0]]["ShelfLife"]
+											foodInfo[item.flat()[0]][
+												"ShelfLife"
+											]
 										)}
 									</StyledTableCell>
 								</StyledTableRow>
@@ -101,7 +111,7 @@ export default function DisplayFoods() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<AddFood/>
+			<AddFood />
 		</>
 	);
 }
