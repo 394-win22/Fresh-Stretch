@@ -60,7 +60,7 @@ const getSvgs=(base) =>{
 	console.log(base);
 	var svg = atob(base);
 	console.log(svg);
-	return (svg);
+	return svg;
 }
 
 export default function DisplayFoods() {
@@ -92,8 +92,7 @@ Expires</StyledTableCell>
 						return (
 							<StyledTableRow key={item.flat()[0]}>
 								<StyledTableCell align="center">
-									{<><svg>{(getSvgs(foodInfo[item.flat()[0]]["Icon"]))}</svg></>
-					}
+									<object data={foodInfo[item.flat()[0]]["Icon"]} width="85" height="85"> </object>
 								</StyledTableCell>
 								<StyledTableCell align="center">
 									{item.flat()[0]}
