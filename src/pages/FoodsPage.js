@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: "#302B2D",
+		backgroundColor: "#ff914d",
 		color: theme.palette.common.white,
 	},
 	[`&.${tableCellClasses.body}`]: {
@@ -22,7 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	"&:nth-of-type(odd)": {
-		backgroundColor: "#E1DDD3",
+		backgroundColor: "white",
 	},
 	// hide last border
 	"&:last-child td, &:last-child th": {
@@ -75,8 +75,7 @@ export default function DisplayFoods() {
 						<StyledTableCell align="center">Icon</StyledTableCell>
 						<StyledTableCell align="center">Name</StyledTableCell>
 						<StyledTableCell align="center">
-							Expires
-						</StyledTableCell>
+Expires</StyledTableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
