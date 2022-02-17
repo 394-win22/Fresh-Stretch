@@ -23,9 +23,7 @@ function CheckboxListSecondary({foodInfo}) {
     const [checked, setChecked] = React.useState([0]);
 
     const handleToggle = (value) => () => {
-        console.log("triggered", value);
         const currentIndex = checked.indexOf(value);
-        console.log(currentIndex);
         const newChecked = [...checked];
 
         if (currentIndex === -1) {
@@ -47,8 +45,8 @@ function CheckboxListSecondary({foodInfo}) {
                 secondaryAction={
                 <Checkbox
                     edge="end"
-                    onChange={handleToggle(value)}
-                    checked={checked.indexOf(value) !== -1}
+                    onChange={handleToggle(value[0])}
+                    checked={checked.indexOf(value[0]) !== -1}
                     inputProps={{ 'aria-labelledby': labelId }}
                 />
                 }
@@ -79,8 +77,6 @@ const AddFood = () => {
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
-
-	//console.log(foodInfo);
 
 	return (
 		<>
