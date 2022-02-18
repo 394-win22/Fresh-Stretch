@@ -79,37 +79,43 @@ export default function DisplayFoods() {
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
+
+	console.log(userFood)
+
 	return (
-		<TableContainer component={Paper}>
-			<Table  aria-label="customized table">
-				<TableHead>
-					<TableRow>
-						<StyledTableCell align="center">Icon</StyledTableCell>
-						<StyledTableCell align="center">Name</StyledTableCell>
-						<StyledTableCell align="center">Expires</StyledTableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{Object.entries(userFood).map((item) => {
-						return (
-							<StyledTableRow key={item.flat()[0]}>
-								<StyledTableCell align="center">
-									<object data={foodInfo[item.flat()[0]]["Icon"]} width="85" height="85"> </object>
-								</StyledTableCell>
-								<StyledTableCell align="center">
-									{item.flat()[0]}
-								</StyledTableCell>
-								<StyledTableCell align="center">
-									{CalculateExpiration(
-										item[1]["TimeAdded"],
-										foodInfo[item.flat()[0]]["ShelfLife"]
-									)}
-								</StyledTableCell>
-							</StyledTableRow>
-						);
-					})}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<>
+			<TableContainer component={Paper}>
+				<Table  aria-label="customized table">
+					<TableHead>
+						<TableRow>
+							<StyledTableCell align="center">Icon</StyledTableCell>
+							<StyledTableCell align="center">Name</StyledTableCell>
+							<StyledTableCell align="center">Expires</StyledTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{Object.entries(userFood).map((item) => {
+							return (
+								<StyledTableRow key={`${item[1]["Name"]}_${item[0]}`}>
+									<StyledTableCell align="center">
+										<object data={foodInfo[item[1]["Name"]]["Icon"]} width="85" height="85"> </object>
+									</StyledTableCell>
+									<StyledTableCell align="center">
+										{item[1]["Name"]}
+									</StyledTableCell>
+									<StyledTableCell align="center">
+										{CalculateExpiration(
+											item[1]["TimeAdded"],
+											foodInfo[item[1]["Name"]]["ShelfLife"]
+										)}
+									</StyledTableCell>
+								</StyledTableRow>
+							);
+						})}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			<AddFood/>
+		</>
 	);
 }

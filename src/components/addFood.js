@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
-import { userID, useData, getItemsFromUser } from "../utils/firebase";
+import { userID, useData, getItemsFromUser, pushData} from "../utils/firebase";
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -16,11 +16,13 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Checkbox from '@mui/material/Checkbox';
 import Avatar from '@mui/material/Avatar';
+import { Alert } from "bootstrap";
+import { Today } from "@mui/icons-material";
 
 
-function CheckboxListSecondary({foodInfo}) {
+function CheckboxListSecondary({foodInfo, checked, setChecked}) {
+
     foodInfo = Object.entries(foodInfo);
-    const [checked, setChecked] = React.useState([0]);
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -34,7 +36,8 @@ function CheckboxListSecondary({foodInfo}) {
 
         setChecked(newChecked);
     };
-
+    console.log(foodInfo)
+    console.log("CHECKED", checked)
     return (
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {Object.entries(foodInfo).map((value) => {
@@ -65,8 +68,28 @@ function CheckboxListSecondary({foodInfo}) {
     );
 }
 
+const saveFood = async (foodInfo, checked)  => {
+    for(var i in checked){
+        var today = new Date();
+        var index = parseInt(checked[i]);
+        try{
+            await pushData(`/UserFood/${userID}`, {
+                Name: foodInfo[index][0],
+                TimeAdded: today.getTime(),
+            });
+        }
+        catch(error){
+            console.log(error)
+        };
+        console.log("Food Saved")
+    }
+};
+
 const AddFood = () => {
 	const [open, setOpen] = React.useState(false);
+    
+    const [checked, setChecked] = React.useState([]);
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -86,8 +109,12 @@ const AddFood = () => {
 				<DialogContent>
 					<Container>
 						<Row>
-                            <CheckboxListSecondary foodInfo={foodInfo} />
+                            <CheckboxListSecondary foodInfo={foodInfo} checked={checked} setChecked={setChecked}/>
 						</Row>
+                        <Button onClick={() => {saveFood(Object.entries(foodInfo), checked, userID);
+                                                setOpen(false);}} >
+                            Confirm
+                        </Button>
 					</Container>
 				</DialogContent>
 			</Dialog>
