@@ -9,6 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { getSvgIconUtilityClass } from "@mui/material";
 import AddFood from "../components/addFood.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -57,6 +58,14 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	}
 };
 
+const getSvgs=(base) =>{
+	var dataURI = 'data:image/svg+xml;base64,' + base;
+	console.log(base);
+	var svg = atob(base);
+	console.log(svg);
+	return svg;
+}
+
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
@@ -71,47 +80,36 @@ export default function DisplayFoods() {
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
 	return (
-		<>
-			<TableContainer component={Paper}>
-				<Table aria-label="customized table">
-					<TableHead>
-						<TableRow>
-							<StyledTableCell align="center">
-								Icon
-							</StyledTableCell>
-							<StyledTableCell align="center">
-								Name
-							</StyledTableCell>
-							<StyledTableCell align="center">
-								Expires
-							</StyledTableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{Object.entries(userFood).map((item) => {
-							return (
-								<StyledTableRow key={item.flat()[0]}>
-									<StyledTableCell align="center">
-										{item.flat()[0]}
-									</StyledTableCell>
-									<StyledTableCell align="center">
-										{item.flat()[0]}
-									</StyledTableCell>
-									<StyledTableCell align="center">
-										{CalculateExpiration(
-											item[1]["TimeAdded"],
-											foodInfo[item.flat()[0]][
-												"ShelfLife"
-											]
-										)}
-									</StyledTableCell>
-								</StyledTableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			<AddFood />
-		</>
+		<TableContainer component={Paper}>
+			<Table  aria-label="customized table">
+				<TableHead>
+					<TableRow>
+						<StyledTableCell align="center">Icon</StyledTableCell>
+						<StyledTableCell align="center">Name</StyledTableCell>
+						<StyledTableCell align="center">Expires</StyledTableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{Object.entries(userFood).map((item) => {
+						return (
+							<StyledTableRow key={item.flat()[0]}>
+								<StyledTableCell align="center">
+									<object data={foodInfo[item.flat()[0]]["Icon"]} width="85" height="85"> </object>
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									{item.flat()[0]}
+								</StyledTableCell>
+								<StyledTableCell align="center">
+									{CalculateExpiration(
+										item[1]["TimeAdded"],
+										foodInfo[item.flat()[0]]["ShelfLife"]
+									)}
+								</StyledTableCell>
+							</StyledTableRow>
+						);
+					})}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	);
 }
