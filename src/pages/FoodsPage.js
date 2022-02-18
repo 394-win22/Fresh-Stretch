@@ -9,6 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { getSvgIconUtilityClass } from "@mui/material";
 import AddFood from "../components/addFood.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -50,12 +51,20 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	} else {
 		const difDays = Math.floor(dif / day);
 		if (difDays === 0) {
-			return "TODAY";
+			return <span style={{color:"#80b470", fontWeight:"600"}}>TODAY</span>;;
 		} else {
 			return difDays + "d";
 		}
 	}
 };
+
+const getSvgs=(base) =>{
+	var dataURI = 'data:image/svg+xml;base64,' + base;
+	console.log(base);
+	var svg = atob(base);
+	console.log(svg);
+	return svg;
+}
 
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
@@ -70,21 +79,18 @@ export default function DisplayFoods() {
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
+
+	console.log(userFood)
+
 	return (
 		<>
 			<TableContainer component={Paper}>
-				<Table aria-label="customized table">
+				<Table  aria-label="customized table">
 					<TableHead>
 						<TableRow>
-							<StyledTableCell align="center">
-								Icon
-							</StyledTableCell>
-							<StyledTableCell align="center">
-								Name
-							</StyledTableCell>
-							<StyledTableCell align="center">
-								Expires
-							</StyledTableCell>
+							<StyledTableCell align="center">Icon</StyledTableCell>
+							<StyledTableCell align="center">Name</StyledTableCell>
+							<StyledTableCell align="center">Expires</StyledTableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -92,7 +98,7 @@ export default function DisplayFoods() {
 							return (
 								<StyledTableRow key={item[1]["Name"]}>
 									<StyledTableCell align="center">
-										{item[1]["Name"]}
+										<object data={foodInfo[item[1]["Name"]]["Icon"]} width="85" height="85"> </object>
 									</StyledTableCell>
 									<StyledTableCell align="center">
 										{item[1]["Name"]}
@@ -100,7 +106,7 @@ export default function DisplayFoods() {
 									<StyledTableCell align="center">
 										{CalculateExpiration(
 											item[1]["TimeAdded"],
-											item[1]["Name"]["ShelfLife"]
+											foodInfo[item[1]["Name"]]["ShelfLife"]
 										)}
 									</StyledTableCell>
 								</StyledTableRow>
@@ -109,7 +115,7 @@ export default function DisplayFoods() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<AddFood />
+			<AddFood/>
 		</>
 	);
 }
