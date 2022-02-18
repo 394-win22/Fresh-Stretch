@@ -96,7 +96,7 @@ export default function DisplayFoods() {
 					<TableBody>
 						{Object.entries(userFood).map((item) => {
 							return (
-								<StyledTableRow key={item[1]["Name"]}>
+								<StyledTableRow key={`${item[1]["Name"]}_${item[0]}`}>
 									<StyledTableCell align="center">
 										<object data={foodInfo[item[1]["Name"]]["Icon"]} width="85" height="85"> </object>
 									</StyledTableCell>
