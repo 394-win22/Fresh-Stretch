@@ -69,14 +69,13 @@ function CheckboxListSecondary({foodInfo, checked, setChecked}) {
 }
 
 const saveFood = async (foodInfo, checked)  => {
-    console.log(foodInfo);
     for(var i in checked){
-        var index = parseInt(checked[i])
-        console.log(foodInfo[index]);
+        var today = new Date();
+        var index = parseInt(checked[i]);
         try{
             await pushData(`/UserFood/${userID}`, {
                 Name: foodInfo[index][0],
-                TimeAdded: Today.getTime(),
+                TimeAdded: today.getTime(),
             });
         }
         catch(error){
