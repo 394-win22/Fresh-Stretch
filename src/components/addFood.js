@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
-import { userID, useData, getItemsFromUser } from "../utils/firebase";
+import { userID, useData, getItemsFromUser, pushData} from "../utils/firebase";
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -20,30 +20,9 @@ import { Alert } from "bootstrap";
 import { Today } from "@mui/icons-material";
 
 
-function CheckboxListSecondary({foodInfo}) {
-
-    const saveFood = (foodInfo, checked) => () => {
-        
-        for(var i in checked){
-            index = checked[i];
-            try{
-                async function push(index, foodInfo, userId){
-                    await pushData(`/UserFood/${userId}`, {
-                    Name: foodInfo[index][0],
-                    TimeAdded: Today.getTime(),
-                });
-                }
-                push(index, foodinfo, userId)
-            }
-            catch(error){
-                alert.show(error)
-            };
-            alert.show("Food Saved")
-        }
-    };
+function CheckboxListSecondary({foodInfo, checked, setChecked}) {
 
     foodInfo = Object.entries(foodInfo);
-    const [checked, setChecked] = React.useState([]);
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -89,8 +68,29 @@ function CheckboxListSecondary({foodInfo}) {
     );
 }
 
+const saveFood = async (foodInfo, checked)  => {
+    console.log(foodInfo);
+    for(var i in checked){
+        var index = parseInt(checked[i])
+        console.log(foodInfo[index]);
+        try{
+            await pushData(`/UserFood/${userID}`, {
+                Name: foodInfo[index][0],
+                TimeAdded: Today.getTime(),
+            });
+        }
+        catch(error){
+            console.log(error)
+        };
+        console.log("Food Saved")
+    }
+};
+
 const AddFood = () => {
 	const [open, setOpen] = React.useState(false);
+    
+    const [checked, setChecked] = React.useState([]);
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -110,9 +110,9 @@ const AddFood = () => {
 				<DialogContent>
 					<Container>
 						<Row>
-                            <CheckboxListSecondary foodInfo={foodInfo} />
+                            <CheckboxListSecondary foodInfo={foodInfo} checked={checked} setChecked={setChecked}/>
 						</Row>
-                        <Button onClick={() => saveFood(foodInfo, checked, userID)} >
+                        <Button onClick={() => saveFood(Object.entries(foodInfo), checked, userID)} >
                             Confirm
                         </Button>
 					</Container>

@@ -90,19 +90,17 @@ export default function DisplayFoods() {
 					<TableBody>
 						{Object.entries(userFood).map((item) => {
 							return (
-								<StyledTableRow key={item.flat()[0]}>
+								<StyledTableRow key={item[1]["Name"]}>
 									<StyledTableCell align="center">
-										{item.flat()[0]}
+										{item[1]["Name"]}
 									</StyledTableCell>
 									<StyledTableCell align="center">
-										{item.flat()[0]}
+										{item[1]["Name"]}
 									</StyledTableCell>
 									<StyledTableCell align="center">
 										{CalculateExpiration(
 											item[1]["TimeAdded"],
-											foodInfo[item.flat()[0]][
-												"ShelfLife"
-											]
+											item[1]["Name"]["ShelfLife"]
 										)}
 									</StyledTableCell>
 								</StyledTableRow>
