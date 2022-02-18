@@ -80,36 +80,39 @@ export default function DisplayFoods() {
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
 	return (
-		<TableContainer component={Paper}>
-			<Table  aria-label="customized table">
-				<TableHead>
-					<TableRow>
-						<StyledTableCell align="center">Icon</StyledTableCell>
-						<StyledTableCell align="center">Name</StyledTableCell>
-						<StyledTableCell align="center">Expires</StyledTableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{Object.entries(userFood).map((item) => {
-						return (
-							<StyledTableRow key={item.flat()[0]}>
-								<StyledTableCell align="center">
-									<object data={foodInfo[item.flat()[0]]["Icon"]} width="85" height="85"> </object>
-								</StyledTableCell>
-								<StyledTableCell align="center">
-									{item.flat()[0]}
-								</StyledTableCell>
-								<StyledTableCell align="center">
-									{CalculateExpiration(
-										item[1]["TimeAdded"],
-										foodInfo[item.flat()[0]]["ShelfLife"]
-									)}
-								</StyledTableCell>
-							</StyledTableRow>
-						);
-					})}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<>
+			<TableContainer component={Paper}>
+				<Table  aria-label="customized table">
+					<TableHead>
+						<TableRow>
+							<StyledTableCell align="center">Icon</StyledTableCell>
+							<StyledTableCell align="center">Name</StyledTableCell>
+							<StyledTableCell align="center">Expires</StyledTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{Object.entries(userFood).map((item) => {
+							return (
+								<StyledTableRow key={item.flat()[0]}>
+									<StyledTableCell align="center">
+										<object data={foodInfo[item.flat()[0]]["Icon"]} width="85" height="85"> </object>
+									</StyledTableCell>
+									<StyledTableCell align="center">
+										{item.flat()[0]}
+									</StyledTableCell>
+									<StyledTableCell align="center">
+										{CalculateExpiration(
+											item[1]["TimeAdded"],
+											foodInfo[item.flat()[0]]["ShelfLife"]
+										)}
+									</StyledTableCell>
+								</StyledTableRow>
+							);
+						})}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			<AddFood/>
+		</>
 	);
 }
