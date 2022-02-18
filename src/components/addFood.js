@@ -111,7 +111,8 @@ const AddFood = () => {
 						<Row>
                             <CheckboxListSecondary foodInfo={foodInfo} checked={checked} setChecked={setChecked}/>
 						</Row>
-                        <Button onClick={() => saveFood(Object.entries(foodInfo), checked, userID)} >
+                        <Button onClick={() => {saveFood(Object.entries(foodInfo), checked, userID);
+                                                setOpen(false);}} >
                             Confirm
                         </Button>
 					</Container>
