@@ -10,6 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { getSvgIconUtilityClass } from "@mui/material";
+import AddFood from "../components/addFood.js";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -42,7 +43,9 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	const week = day * 7;
 
 	if (dif < 0) {
-		return <text style={{color:"#ff4d62", fontWeight:"600"}}>EXPIRED</text>;
+		return (
+			<span style={{ color: "#ff4d62", fontWeight: "600" }}>EXPIRED</span>
+		);
 	} else if (dif > week) {
 		return Math.floor(dif / week) + "w";
 	} else {
