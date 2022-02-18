@@ -16,11 +16,34 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Checkbox from '@mui/material/Checkbox';
 import Avatar from '@mui/material/Avatar';
+import { Alert } from "bootstrap";
+import { Today } from "@mui/icons-material";
 
 
 function CheckboxListSecondary({foodInfo}) {
+
+    const saveFood = (foodInfo, checked) => () => {
+        
+        for(var i in checked){
+            index = checked[i];
+            try{
+                async function push(index, foodInfo, userId){
+                    await pushData(`/UserFood/${userId}`, {
+                    Name: foodInfo[index][0],
+                    TimeAdded: Today.getTime(),
+                });
+                }
+                push(index, foodinfo, userId)
+            }
+            catch(error){
+                alert.show(error)
+            };
+            alert.show("Food Saved")
+        }
+    };
+
     foodInfo = Object.entries(foodInfo);
-    const [checked, setChecked] = React.useState([0]);
+    const [checked, setChecked] = React.useState([]);
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -34,7 +57,8 @@ function CheckboxListSecondary({foodInfo}) {
 
         setChecked(newChecked);
     };
-
+    console.log(foodInfo)
+    console.log("CHECKED", checked)
     return (
         <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {Object.entries(foodInfo).map((value) => {
@@ -88,6 +112,9 @@ const AddFood = () => {
 						<Row>
                             <CheckboxListSecondary foodInfo={foodInfo} />
 						</Row>
+                        <Button onClick={() => saveFood(foodInfo, checked, userID)} >
+                            Confirm
+                        </Button>
 					</Container>
 				</DialogContent>
 			</Dialog>
