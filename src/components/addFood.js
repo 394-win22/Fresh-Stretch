@@ -18,6 +18,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Avatar from '@mui/material/Avatar';
 import { Alert } from "bootstrap";
 import { Today } from "@mui/icons-material";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 
 
 function CheckboxListSecondary({foodInfo, checked, setChecked}) {
@@ -103,7 +105,10 @@ const AddFood = () => {
 
 	return (
 		<>
-			<Button onClick={handleClickOpen}>Add Food</Button>
+            <Fab sx={{bgcolor:'#80b470', position: 'fixed', bottom: 80,
+  right: 16,}} size="small" color="primary" aria-label="add">
+                <AddIcon onClick={handleClickOpen}/>
+            </Fab>
 			<Dialog open={open} onClose={handleClose}>
 				<DialogTitle>Add Food Items</DialogTitle>
 				<DialogContent>

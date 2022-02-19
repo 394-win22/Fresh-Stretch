@@ -84,8 +84,9 @@ export default function DisplayFoods() {
 
 	return (
 		<>
-			<TableContainer component={Paper}>
-				<Table  aria-label="customized table">
+			
+			<TableContainer component={Paper} sx={{position: 'relative'}}>
+				<Table  aria-label="customized table" sx={{position: 'relative'}}>
 					<TableHead>
 						<TableRow>
 							<StyledTableCell align="center">Icon</StyledTableCell>
@@ -113,9 +114,14 @@ export default function DisplayFoods() {
 							);
 						})}
 					</TableBody>
+					
 				</Table>
+				
 			</TableContainer>
 			<AddFood/>
+			
+			
+			
 		</>
 	);
 }
