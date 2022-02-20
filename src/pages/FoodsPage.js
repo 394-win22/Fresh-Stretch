@@ -1,11 +1,12 @@
 import React from "react";
 // import { Table, Container, Row, Col } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
+// import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -19,6 +20,7 @@ import { userID, useData, getItemsFromUser } from "../utils/firebase";
 import SwipeToDelete from "react-swipe-to-delete-ios";
 // import SwipeToDelete from "react-swipe-to-delete-component";
 // import "react-swipe-to-delete-component/dist/swipe-to-delete.css";
+import SwipeRow from "react-swipe-row";
 
 import AddFood from "../components/addFood.js";
 import "./FoodsPage.css";
@@ -126,7 +128,48 @@ export default function DisplayFoods() {
 
 	return (
 		<>
-			<TableContainer component={Paper} sx={{ position: "relative" }}>
+			<Table bordered>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Food Item</th>
+						<th>Use By</th>
+					</tr>
+				</thead>
+				<tbody>
+					{Object.entries(userFood)
+						.sort(compareItems)
+						.map((item) => {
+							return (
+								<tr key={`${item[1]["Name"]}_${item[0]}`}>
+									<td>
+										<object
+											data={
+												foodInfo[item[1]["Name"]][
+													"Icon"
+												]
+											}
+											width="85"
+											height="85"
+										>
+											{" "}
+										</object>
+									</td>
+									<td>{item[1]["Name"]}</td>
+									<td>
+										{CalculateExpiration(
+											item[1]["TimeAdded"],
+											foodInfo[item[1]["Name"]][
+												"ShelfLife"
+											]
+										)}
+									</td>
+								</tr>
+							);
+						})}
+				</tbody>
+			</Table>
+			{/* <TableContainer component={Paper} sx={{ position: "relative" }}>
 				<Table
 					aria-label="customized table"
 					sx={{ position: "relative" }}
@@ -179,7 +222,7 @@ export default function DisplayFoods() {
 							})}
 					</TableBody>
 				</Table>
-			</TableContainer>
+			</TableContainer> */}
 		</>
 	);
 }
