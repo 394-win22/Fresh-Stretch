@@ -91,7 +91,7 @@ export default function DisplayFoods() {
 				<Table  aria-label="customized table">
 					<TableHead>
 						<TableRow>
-							<StyledTableCell align="center">Icon</StyledTableCell>
+							<StyledTableCell align="center"></StyledTableCell>
 							<StyledTableCell align="center">Name</StyledTableCell>
 							<StyledTableCell align="center">Expires</StyledTableCell>
 						</TableRow>
@@ -118,7 +118,7 @@ export default function DisplayFoods() {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<AddFood/>
+			
 		</>
 	);
 }
