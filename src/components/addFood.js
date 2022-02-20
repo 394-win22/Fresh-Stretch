@@ -1,94 +1,90 @@
-import React, { useState } from "react";
-import {
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
-} from "@mui/material";
+import React from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
-import { userID, useData, getItemsFromUser, pushData} from "../utils/firebase";
+import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Checkbox from "@mui/material/Checkbox";
+import Avatar from "@mui/material/Avatar";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Checkbox from '@mui/material/Checkbox';
-import Avatar from '@mui/material/Avatar';
-import { Alert } from "bootstrap";
-import { Today } from "@mui/icons-material";
+import { userID, useData, pushData } from "../utils/firebase";
 
+function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
+	foodInfo = Object.entries(foodInfo);
 
-function CheckboxListSecondary({foodInfo, checked, setChecked}) {
+	const handleToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [...checked];
 
-    foodInfo = Object.entries(foodInfo);
+		if (currentIndex === -1) {
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-        newChecked.push(value);
-        } else {
-        newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
-    };
-    console.log(foodInfo)
-    console.log("CHECKED", checked)
-    return (
-        <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {Object.entries(foodInfo).map((value) => {
-            const labelId = `checkbox-list-secondary-label-${value}`;
-            return (
-            <ListItem
-                key={value[0]}
-                secondaryAction={
-                <Checkbox
-                    edge="end"
-                    onChange={handleToggle(value[0])}
-                    checked={checked.indexOf(value[0]) !== -1}
-                    inputProps={{ 'aria-labelledby': labelId }}
-                />
-                }
-                disablePadding
-            >
-                <ListItemButton>
-                <ListItemAvatar>
-                    <Avatar>{value[1][0][0]}</Avatar> 
-                </ListItemAvatar>
-                <ListItemText id={labelId} primary={`${value[1][0]}`} />
-                </ListItemButton>
-            </ListItem>
-            );
-        })}
-        </List>
-    );
+		setChecked(newChecked);
+	};
+	console.log(foodInfo);
+	console.log("CHECKED", checked);
+	return (
+		<List
+			dense
+			sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+		>
+			{Object.entries(foodInfo).map((value) => {
+				const labelId = `checkbox-list-secondary-label-${value}`;
+				return (
+					<ListItem
+						key={value[0]}
+						secondaryAction={
+							<Checkbox
+								edge="end"
+								onChange={handleToggle(value[0])}
+								checked={checked.indexOf(value[0]) !== -1}
+								inputProps={{ "aria-labelledby": labelId }}
+							/>
+						}
+						disablePadding
+					>
+						<ListItemButton>
+							<ListItemAvatar>
+								<Avatar>{value[1][0][0]}</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								id={labelId}
+								primary={`${value[1][0]}`}
+							/>
+						</ListItemButton>
+					</ListItem>
+				);
+			})}
+		</List>
+	);
 }
 
-const saveFood = async (foodInfo, checked)  => {
-    for(var i in checked){
-        var today = new Date();
-        var index = parseInt(checked[i]);
-        try{
-            await pushData(`/UserFood/${userID}`, {
-                Name: foodInfo[index][0],
-                TimeAdded: today.getTime(),
-            });
-        }
-        catch(error){
-            console.log(error)
-        };
-        console.log("Food Saved")
-    }
+const saveFood = async (foodInfo, checked) => {
+	for (var i in checked) {
+		var today = new Date();
+		var index = parseInt(checked[i]);
+		try {
+			await pushData(`/UserFood/${userID}`, {
+				Name: foodInfo[index][0],
+				TimeAdded: today.getTime(),
+			});
+		} catch (error) {
+			console.log(error);
+		}
+		console.log("Food Saved");
+	}
 };
 
 const AddFood = () => {
 	const [open, setOpen] = React.useState(false);
-    
-    const [checked, setChecked] = React.useState([]);
+
+	const [checked, setChecked] = React.useState([]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -109,12 +105,24 @@ const AddFood = () => {
 				<DialogContent>
 					<Container>
 						<Row>
-                            <CheckboxListSecondary foodInfo={foodInfo} checked={checked} setChecked={setChecked}/>
+							<CheckboxListSecondary
+								foodInfo={foodInfo}
+								checked={checked}
+								setChecked={setChecked}
+							/>
 						</Row>
-                        <Button onClick={() => {saveFood(Object.entries(foodInfo), checked, userID);
-                                                setOpen(false);}} >
-                            Confirm
-                        </Button>
+						<Button
+							onClick={() => {
+								saveFood(
+									Object.entries(foodInfo),
+									checked,
+									userID
+								);
+								setOpen(false);
+							}}
+						>
+							Confirm
+						</Button>
 					</Container>
 				</DialogContent>
 			</Dialog>

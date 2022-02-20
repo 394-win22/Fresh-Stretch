@@ -1,36 +1,10 @@
 import React from "react";
+import { Table } from "react-bootstrap";
+
 import { userID, useData, getItemsFromUser } from "../utils/firebase";
 
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { getSvgIconUtilityClass } from "@mui/material";
 import AddFood from "../components/addFood.js";
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-	[`&.${tableCellClasses.head}`]: {
-		backgroundColor: "#ff914d",
-		color: theme.palette.common.white,
-	},
-	[`&.${tableCellClasses.body}`]: {
-		fontSize: 14,
-	},
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	"&:nth-of-type(odd)": {
-		backgroundColor: "white",
-	},
-	// hide last border
-	"&:last-child td, &:last-child th": {
-		border: 0,
-	},
-}));
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
@@ -51,20 +25,24 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	} else {
 		const difDays = Math.floor(dif / day);
 		if (difDays === 0) {
-			return <span style={{ color: "#80b470", fontWeight: "600" }}>TODAY</span>;
+			return (
+				<span style={{ color: "#80b470", fontWeight: "600" }}>
+					TODAY
+				</span>
+			);
 		} else {
 			return difDays + "d";
 		}
 	}
 };
 
-const getSvgs=(base) =>{
-	var dataURI = 'data:image/svg+xml;base64,' + base;
+const getSvgs = (base) => {
+	var dataURI = "data:image/svg+xml;base64," + base;
 	console.log(base);
 	var svg = atob(base);
 	console.log(svg);
 	return svg;
-}
+};
 
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
@@ -79,43 +57,42 @@ export default function DisplayFoods() {
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
-
-	console.log(userFood)
-
 	return (
 		<>
-			<TableContainer component={Paper}>
-				<Table  aria-label="customized table">
-					<TableHead>
-						<TableRow>
-							<StyledTableCell align="center">Icon</StyledTableCell>
-							<StyledTableCell align="center">Name</StyledTableCell>
-							<StyledTableCell align="center">Expires</StyledTableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{Object.entries(userFood).map((item) => {
-							return (
-								<StyledTableRow key={`${item[1]["Name"]}_${item[0]}`}>
-									<StyledTableCell align="center">
-										<object data={foodInfo[item[1]["Name"]]["Icon"]} width="85" height="85"> </object>
-									</StyledTableCell>
-									<StyledTableCell align="center">
-										{item[1]["Name"]}
-									</StyledTableCell>
-									<StyledTableCell align="center">
-										{CalculateExpiration(
-											item[1]["TimeAdded"],
-											foodInfo[item[1]["Name"]]["ShelfLife"]
-										)}
-									</StyledTableCell>
-								</StyledTableRow>
-							);
-						})}
-					</TableBody>
-				</Table>
-			</TableContainer>
-			<AddFood/>
+			<Table>
+				<thead>
+					<tr>
+						<th>Icon</th>
+						<th>Name</th>
+						<th>Expires</th>
+					</tr>
+				</thead>
+				<tbody>
+					{Object.entries(userFood).map((item) => {
+						return (
+							<tr>
+								<td>
+									<object
+										data={foodInfo[item[1]["Name"]]["Icon"]}
+										width="85"
+										height="85"
+									>
+										{" "}
+									</object>
+								</td>
+								<td>{item[1]["Name"]}</td>
+								<td>
+									{CalculateExpiration(
+										item[1]["TimeAdded"],
+										foodInfo[item[1]["Name"]]["ShelfLife"]
+									)}
+								</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</Table>
+			<AddFood />
 		</>
 	);
 }
