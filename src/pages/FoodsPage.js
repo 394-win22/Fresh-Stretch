@@ -61,6 +61,16 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	}
 };
 
+const CalculateExpirationAbs = (timeAdded, shelfLife) => {
+	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
+	const expDate = new Date(timeAdded + shelfLife);
+
+	const today = Date.now();
+	const dif = expDate - today;
+
+	return dif;
+};
+
 const getSvgs=(base) =>{
 	var dataURI = 'data:image/svg+xml;base64,' + base;
 	console.log(base);
@@ -82,8 +92,13 @@ export default function DisplayFoods() {
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
-
-	console.log(userFood)
+	let compareItems = (item1, item2) => {
+		var x = CalculateExpirationAbs(item1[1]["TimeAdded"],
+		foodInfo[item1[1]["Name"]]["ShelfLife"]); 
+		var y = CalculateExpirationAbs(item2[1]["TimeAdded"],
+		foodInfo[item2[1]["Name"]]["ShelfLife"]);
+  		return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+	};
 
 	return (
 		<>
@@ -98,7 +113,7 @@ export default function DisplayFoods() {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{Object.entries(userFood).map((item) => {
+						{Object.entries(userFood).sort(compareItems).map((item) => {
 							return (
 								<StyledTableRow key={`${item[1]["Name"]}_${item[0]}`}>
 									<StyledTableCell align="center">
