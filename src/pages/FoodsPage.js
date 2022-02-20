@@ -29,20 +29,34 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 		return (
 			<span style={{ color: "#ff4d62", fontWeight: "600" }}>EXPIRED</span>
 		);
-	} else if (dif > week) {
-		return Math.floor(dif / week) + "w";
 	} else {
 		const difDays = Math.floor(dif / day);
 		if (difDays === 0) {
 			return (
-				<span style={{ color: "#80b470", fontWeight: "600" }}>
+				<span style={{ color: "#ff914d", fontWeight: "600" }}>
 					TODAY
+				</span>
+			);
+		} else if (difDays <= 3) {
+			return (
+				<span style={{ color: "#ff914d", fontWeight: "600" }}>
+					{difDays}d
 				</span>
 			);
 		} else {
 			return difDays + "d";
 		}
 	}
+};
+
+const CalculateExpirationAbs = (timeAdded, shelfLife) => {
+	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
+	const expDate = new Date(timeAdded + shelfLife);
+
+	const today = Date.now();
+	const dif = expDate - today;
+
+	return dif;
 };
 
 const getSvgs = (base) => {
@@ -70,54 +84,74 @@ export default function DisplayFoods() {
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
+	let compareItems = (item1, item2) => {
+		var x = CalculateExpirationAbs(
+			item1[1]["TimeAdded"],
+			foodInfo[item1[1]["Name"]]["ShelfLife"]
+		);
+		var y = CalculateExpirationAbs(
+			item2[1]["TimeAdded"],
+			foodInfo[item2[1]["Name"]]["ShelfLife"]
+		);
+		return x < y ? -1 : x > y ? 1 : 0;
+	};
+
 	return (
 		<>
-			<div className="container">
-				<div className="row">
-					<div className="col-6">Icon</div>
-					<div className="col-3">Name</div>
-					<div className="col-3">Expires</div>
-				</div>
-			</div>
-			{/* <Container>
-				<Row>
-					<Col xs={4}>Icon</Col>
-					<Col xs={4}>Name</Col>
-					<Col xs={4}>Expires</Col>
-				</Row>
-			</Container> */}
-			{/* <tbody>
-				{Object.entries(userFood).map((item) => {
-					return (
-						<SwipeToDelete
-							height={100}
-							onDelete={handleDelete}
-							key={`${item[1]["Name"]}_${item[0]}`}
-						>
-							<tr>
-								<td>
-									<object
-										data={foodInfo[item[1]["Name"]]["Icon"]}
-										width="85"
-										height="85"
+			<TableContainer component={Paper} sx={{ position: "relative" }}>
+				<Table
+					aria-label="customized table"
+					sx={{ position: "relative" }}
+				>
+					<TableHead>
+						<TableRow>
+							<StyledTableCell align="center"></StyledTableCell>
+							<StyledTableCell align="center">
+								Food Item
+							</StyledTableCell>
+							<StyledTableCell align="center">
+								Use By
+							</StyledTableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{Object.entries(userFood)
+							.sort(compareItems)
+							.map((item) => {
+								return (
+									<StyledTableRow
+										key={`${item[1]["Name"]}_${item[0]}`}
 									>
-										{" "}
-									</object>
-								</td>
-								<td>{item[1]["Name"]}</td>
-								<td>
-									{CalculateExpiration(
-										item[1]["TimeAdded"],
-										foodInfo[item[1]["Name"]]["ShelfLife"]
-									)}
-								</td>
-							</tr>
-						</SwipeToDelete>
-					);
-				})}
-			</tbody> */}
-
-			<AddFood />
+										<StyledTableCell align="center">
+											<object
+												data={
+													foodInfo[item[1]["Name"]][
+														"Icon"
+													]
+												}
+												width="85"
+												height="85"
+											>
+												{" "}
+											</object>
+										</StyledTableCell>
+										<StyledTableCell align="center">
+											{item[1]["Name"]}
+										</StyledTableCell>
+										<StyledTableCell align="center">
+											{CalculateExpiration(
+												item[1]["TimeAdded"],
+												foodInfo[item[1]["Name"]][
+													"ShelfLife"
+												]
+											)}
+										</StyledTableCell>
+									</StyledTableRow>
+								);
+							})}
+					</TableBody>
+				</Table>
+			</TableContainer>
 		</>
 	);
 }

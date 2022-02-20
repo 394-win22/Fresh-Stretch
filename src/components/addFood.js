@@ -9,6 +9,10 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+
+import { PlusSquareFill } from "react-bootstrap-icons";
 
 import { userID, useData, pushData } from "../utils/firebase";
 
@@ -99,7 +103,12 @@ const AddFood = () => {
 
 	return (
 		<>
-			<Button onClick={handleClickOpen}>Add Food</Button>
+			<PlusSquareFill
+				onClick={handleClickOpen}
+				size={45}
+				color="#80b470"
+			></PlusSquareFill>
+
 			<Dialog open={open} onClose={handleClose}>
 				<DialogTitle>Add Food Items</DialogTitle>
 				<DialogContent>
