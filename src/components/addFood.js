@@ -18,7 +18,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Avatar from '@mui/material/Avatar';
 import { Alert } from "bootstrap";
 import { Today } from "@mui/icons-material";
+
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+
 import { PlusSquareFill } from 'react-bootstrap-icons';
+
 
 
 function CheckboxListSecondary({foodInfo, checked, setChecked}) {
@@ -104,7 +109,9 @@ const AddFood = () => {
 
 	return (
 		<>
+
 		< PlusSquareFill onClick={handleClickOpen} size={45} color="#80b470"></PlusSquareFill>
+
 			<Dialog open={open} onClose={handleClose}>
 				<DialogTitle>Add Food Items</DialogTitle>
 				<DialogContent>

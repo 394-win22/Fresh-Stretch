@@ -7,10 +7,12 @@ const Header = () => {
 		<>
             <div className="header-margin">
 			
+
 			<div className="header">
 				<AddFood padding-left="5em"/>
 				<object data="Logo1.svg" width="150" height="85" text-align="center"> </object>
 			</div>
+
 			</div>
 		</>
 	);
