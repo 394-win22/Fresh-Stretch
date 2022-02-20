@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 import { userID, useData, getItemsFromUser } from "../utils/firebase";
-
+import SwipeToDelete from 'react-swipe-to-delete-ios'
 import { getSvgIconUtilityClass } from "@mui/material";
 import AddFood from "../components/addFood.js";
 
@@ -44,6 +44,10 @@ const getSvgs = (base) => {
 	return svg;
 };
 
+const handleDelete = () => {
+	return
+};
+
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
@@ -59,7 +63,7 @@ export default function DisplayFoods() {
 
 	return (
 		<>
-			<Table>
+			<Table bordered striped>
 				<thead>
 					<tr>
 						<th>Icon</th>
@@ -67,10 +71,14 @@ export default function DisplayFoods() {
 						<th>Expires</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody >
 					{Object.entries(userFood).map((item) => {
 						return (
-							<tr>
+							<SwipeToDelete height={100}
+							onDelete={handleDelete}
+							key={`${item[1]["Name"]}_${item[0]}`}>
+								<tr  
+								style={{backgroundColor:"white"}}>
 								<td>
 									<object
 										data={foodInfo[item[1]["Name"]]["Icon"]}
@@ -88,6 +96,8 @@ export default function DisplayFoods() {
 									)}
 								</td>
 							</tr>
+							</SwipeToDelete>
+							
 						);
 					})}
 				</tbody>
