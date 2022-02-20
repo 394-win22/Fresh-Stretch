@@ -3,11 +3,22 @@
 	font-family: "Prata", serif;
 	color: #302B2D;
 	background-color: #E1DDD3;
-	text-align: center;
 	z-index: 999;
 	position: fixed;
 	width: 100%;
     top: 0px;
+
+}
+
+.header > object{
+	left: 30.5%;
+	position: fixed;
+
+}
+
+.header > svg{
+	margin-top: 1.2em;
+	margin-left:1.2em;
 
 }
 
@@ -18,6 +29,7 @@
 .header-margin {
 	height: 5.5rem;
 	background-color: #E1DDD3;
-	text-align: center;
-	z-index: 999;
+
+
+
 }

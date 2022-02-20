@@ -46,13 +46,16 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 		return (
 			<span style={{ color: "#ff4d62", fontWeight: "600" }}>EXPIRED</span>
 		);
-	} else if (dif > week) {
-		return Math.floor(dif / week) + "w";
-	} else {
+	}
+	else {
 		const difDays = Math.floor(dif / day);
 		if (difDays === 0) {
-			return <span style={{color:"#80b470", fontWeight:"600"}}>TODAY</span>;;
-		} else {
+			return <span style={{ color: "#ff914d", fontWeight: "600" }}>TODAY</span>;
+		} else if(difDays<= 3){
+			return <span style={{ color: "#ff914d", fontWeight: "600" }}>{difDays}d</span>;
+		}
+		
+		else {
 			return difDays + "d";
 		}
 	}
@@ -89,7 +92,7 @@ export default function DisplayFoods() {
 				<Table  aria-label="customized table" sx={{position: 'relative'}}>
 					<TableHead>
 						<TableRow>
-							<StyledTableCell align="center">Icon</StyledTableCell>
+							<StyledTableCell align="center"></StyledTableCell>
 							<StyledTableCell align="center">Name</StyledTableCell>
 							<StyledTableCell align="center">Expires</StyledTableCell>
 						</TableRow>
@@ -118,9 +121,7 @@ export default function DisplayFoods() {
 				</Table>
 				
 			</TableContainer>
-			<AddFood/>
-			
-			
+
 			
 		</>
 	);
