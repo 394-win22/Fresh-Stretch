@@ -108,8 +108,8 @@ export default function DisplayFoods() {
 					<TableHead>
 						<TableRow>
 							<StyledTableCell align="center"></StyledTableCell>
-							<StyledTableCell align="center">Name</StyledTableCell>
-							<StyledTableCell align="center">Expires</StyledTableCell>
+							<StyledTableCell align="center">Food Item</StyledTableCell>
+							<StyledTableCell align="center">Use By</StyledTableCell>
 						</TableRow>
 					</TableHead>
 					<TableBody>
