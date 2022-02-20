@@ -4,16 +4,44 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { getSvgIconUtilityClass } from "@mui/material";
+
 import { userID, useData, getItemsFromUser } from "../utils/firebase";
 
 import SwipeToDelete from "react-swipe-to-delete-ios";
 // import SwipeToDelete from "react-swipe-to-delete-component";
 // import "react-swipe-to-delete-component/dist/swipe-to-delete.css";
 
-import { getSvgIconUtilityClass } from "@mui/material";
-
 import AddFood from "../components/addFood.js";
 import "./FoodsPage.css";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+	[`&.${tableCellClasses.head}`]: {
+		backgroundColor: "#ff914d",
+		color: theme.palette.common.white,
+	},
+	[`&.${tableCellClasses.body}`]: {
+		fontSize: 14,
+	},
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+	"&:nth-of-type(odd)": {
+		backgroundColor: "white",
+	},
+	// hide last border
+	"&:last-child td, &:last-child th": {
+		border: 0,
+	},
+}));
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
