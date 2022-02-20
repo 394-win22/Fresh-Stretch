@@ -1,10 +1,19 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+// import { Table, Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import { userID, useData, getItemsFromUser } from "../utils/firebase";
-import SwipeToDelete from 'react-swipe-to-delete-ios'
+
+import SwipeToDelete from "react-swipe-to-delete-ios";
+// import SwipeToDelete from "react-swipe-to-delete-component";
+// import "react-swipe-to-delete-component/dist/swipe-to-delete.css";
+
 import { getSvgIconUtilityClass } from "@mui/material";
+
 import AddFood from "../components/addFood.js";
+import "./FoodsPage.css";
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
@@ -45,7 +54,7 @@ const getSvgs = (base) => {
 };
 
 const handleDelete = () => {
-	return
+	return;
 };
 
 export default function DisplayFoods() {
@@ -63,22 +72,29 @@ export default function DisplayFoods() {
 
 	return (
 		<>
-			<Table bordered striped>
-				<thead>
-					<tr>
-						<th>Icon</th>
-						<th>Name</th>
-						<th>Expires</th>
-					</tr>
-				</thead>
-				<tbody >
-					{Object.entries(userFood).map((item) => {
-						return (
-							<SwipeToDelete height={100}
+			<div className="container">
+				<div className="row">
+					<div className="col-6">Icon</div>
+					<div className="col-3">Name</div>
+					<div className="col-3">Expires</div>
+				</div>
+			</div>
+			{/* <Container>
+				<Row>
+					<Col xs={4}>Icon</Col>
+					<Col xs={4}>Name</Col>
+					<Col xs={4}>Expires</Col>
+				</Row>
+			</Container> */}
+			{/* <tbody>
+				{Object.entries(userFood).map((item) => {
+					return (
+						<SwipeToDelete
+							height={100}
 							onDelete={handleDelete}
-							key={`${item[1]["Name"]}_${item[0]}`}>
-								<tr  
-								style={{backgroundColor:"white"}}>
+							key={`${item[1]["Name"]}_${item[0]}`}
+						>
+							<tr>
 								<td>
 									<object
 										data={foodInfo[item[1]["Name"]]["Icon"]}
@@ -96,12 +112,11 @@ export default function DisplayFoods() {
 									)}
 								</td>
 							</tr>
-							</SwipeToDelete>
-							
-						);
-					})}
-				</tbody>
-			</Table>
+						</SwipeToDelete>
+					);
+				})}
+			</tbody> */}
+
 			<AddFood />
 		</>
 	);
