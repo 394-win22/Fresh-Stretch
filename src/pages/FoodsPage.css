@@ -27,18 +27,12 @@
 }
 
 .itemContent {
-  height: 64px;
+  height: 70px;
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
-  background-color: #555878;
-  border-style: solid;
-  border-color: #393a52;
-  border-width: 12px;
-  border-top-width: 6px;
-  border-bottom-width: 6px;
-  color: #eee;
   user-select: none;
 }
 
@@ -51,15 +45,6 @@
   font-weight: 500;
   box-sizing: border-box;
   color: green;
-  user-select: none;
-}
-
-.avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  margin-right: 8px;
-  user-drag: none;
   user-select: none;
 }
 

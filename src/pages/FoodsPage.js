@@ -163,31 +163,33 @@ export default function DisplayFoods() {
 											trailingActions={trailingActions(item[0])}
 											key={item[0]}
 										>
-											<Row
-												style={{ backgroundColor: "white" }}
-												className="py-2"
-											>
-												<Col>
-													<object
-														data={
+											<div className="itemContent">
+												{/* <div
+													style={{ backgroundColor: "white" }}
+													className="itemRow"
+												> */}
+													<div className="itemColumn">
+														<object
+															data={
+																foodInfo[item[1]["Name"]][
+																	"Icon"
+																]
+															}
+															width="75"
+															height="75"
+														/>
+													</div>
+													<div className="itemColumn">{item[1]["Name"]}</div>
+													<div className="itemColumn">
+														{CalculateExpiration(
+															item[1]["TimeAdded"],
 															foodInfo[item[1]["Name"]][
-																"Icon"
+																"ShelfLife"
 															]
-														}
-														width="75"
-														height="75"
-													/>
-												</Col>
-												<Col>{item[1]["Name"]}</Col>
-												<Col>
-													{CalculateExpiration(
-														item[1]["TimeAdded"],
-														foodInfo[item[1]["Name"]][
-															"ShelfLife"
-														]
-													)}
-												</Col>
-											</Row>
+														)}
+													</div>
+												{/* </div> */}
+											</div>
 										</SwipeableListItem>
 								);
 							})}
