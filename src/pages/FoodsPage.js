@@ -1,6 +1,15 @@
 import React from "react";
 import SwipeToDelete from "react-swipe-to-delete-ios";
 
+import {
+	LeadingActions,
+	SwipeableList,
+	SwipeableListItem,
+	SwipeAction,
+	TrailingActions,
+  } from 'react-swipeable-list';
+  import 'react-swipeable-list/dist/styles.css';
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -61,15 +70,35 @@ const getSvgs = (base) => {
 	return svg;
 };
 
-const handleDelete = (itemID) => {
-	console.log("Delete item");
-	// setData(`/UserFood/${userID}/${itemID}`, null);
-};
+const leadingActions = () => (
+	<LeadingActions>
+	  <SwipeAction onClick={() => console.info('leading swipe action triggered')}>
+		Action name
+	  </SwipeAction>
+	</LeadingActions>
+  );
+  
+  const trailingActions = () => (
+	<TrailingActions>
+	  <SwipeAction
+		destructive={true}
+		onClick={() => console.info('trailing swipe action triggered')}
+	  >
+		Delete
+	  </SwipeAction>
+	</TrailingActions>
+  );
+  
 
 export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
 	);
+
+	const handleDelete = (itemID) => {
+		console.log("Delete item");
+		// setData(`/UserFood/${userID}/${itemID}`, null);
+	};
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 
@@ -113,38 +142,37 @@ export default function DisplayFoods() {
 					.sort(compareItems)
 					.map((item) => {
 						return (
-							<SwipeToDelete
-								key={`${item[1]["Name"]}_${item[0]}`}
-								height={85}
-								onDelete={handleDelete(item[0])}
-								deleteWidth={85}
-							>
-								<Row
-									style={{ backgroundColor: "white" }}
-									className="py-2"
+							<SwipeableList>
+								<SwipeableListItem
+									trailingActions={trailingActions()}
 								>
-									<Col>
-										<object
-											data={
+									<Row
+										style={{ backgroundColor: "white" }}
+										className="py-2"
+									>
+										<Col>
+											<object
+												data={
+													foodInfo[item[1]["Name"]][
+														"Icon"
+													]
+												}
+												width="75"
+												height="75"
+											/>
+										</Col>
+										<Col>{item[1]["Name"]}</Col>
+										<Col>
+											{CalculateExpiration(
+												item[1]["TimeAdded"],
 												foodInfo[item[1]["Name"]][
-													"Icon"
+													"ShelfLife"
 												]
-											}
-											width="75"
-											height="75"
-										/>
-									</Col>
-									<Col>{item[1]["Name"]}</Col>
-									<Col>
-										{CalculateExpiration(
-											item[1]["TimeAdded"],
-											foodInfo[item[1]["Name"]][
-												"ShelfLife"
-											]
-										)}
-									</Col>
-								</Row>
-							</SwipeToDelete>
+											)}
+										</Col>
+									</Row>
+								</SwipeableListItem>
+							</SwipeableList>
 						);
 					})}
 			</Container>
