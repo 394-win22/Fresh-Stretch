@@ -1,5 +1,12 @@
+#header {
+	background-color: #ff914d;
+	color: white;
+	font-weight: bold;
+}
+
 .col {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 }

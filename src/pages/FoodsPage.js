@@ -103,7 +103,7 @@ export default function DisplayFoods() {
 	return (
 		<>
 			<Container>
-				<Row>
+				<Row id="header" className="py-3">
 					<Col></Col>
 					<Col>Food Item</Col>
 					<Col>Use By</Col>
@@ -119,7 +119,10 @@ export default function DisplayFoods() {
 								onDelete={handleDelete(item[0])}
 								deleteWidth={85}
 							>
-								<Row style={{ backgroundColor: "white" }}>
+								<Row
+									style={{ backgroundColor: "white" }}
+									className="py-2"
+								>
 									<Col>
 										<object
 											data={
@@ -127,11 +130,9 @@ export default function DisplayFoods() {
 													"Icon"
 												]
 											}
-											width="85"
-											height="85"
-										>
-											{" "}
-										</object>
+											width="75"
+											height="75"
+										/>
 									</Col>
 									<Col>{item[1]["Name"]}</Col>
 									<Col>
