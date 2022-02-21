@@ -84,7 +84,9 @@ const leadingActions = () => (
 		destructive={true}
 		onClick={() => setData(`/UserFood/${userID}/${item}`, null)}
 	  >
-		Delete
+		<div style={{background:"red"}}>
+			<p style={{color:"white", weight:"bold"}}>Delete</p>
+		</div>
 	  </SwipeAction>
 	</TrailingActions>
   );
@@ -137,44 +139,45 @@ export default function DisplayFoods() {
 					<Col>Food Item</Col>
 					<Col>Use By</Col>
 				</Row>
-
-				{Object.entries(userFood)
-					.sort(compareItems)
-					.map((item) => {
-						return (
-							<SwipeableList>
-								<SwipeableListItem
-									trailingActions={trailingActions(item[0])}
-								>
-									<Row
-										style={{ backgroundColor: "white" }}
-										className="py-2"
+				<SwipeableList>
+					{Object.entries(userFood)
+						.sort(compareItems)
+						.map((item) => {
+							return (
+									<SwipeableListItem
+										trailingActions={trailingActions(item[0])}
+										key={item[0]}
 									>
-										<Col>
-											<object
-												data={
+										<Row
+											style={{ backgroundColor: "white" }}
+											className="py-2"
+										>
+											<Col>
+												<object
+													data={
+														foodInfo[item[1]["Name"]][
+															"Icon"
+														]
+													}
+													width="75"
+													height="75"
+												/>
+											</Col>
+											<Col>{item[1]["Name"]}</Col>
+											<Col>
+												{CalculateExpiration(
+													item[1]["TimeAdded"],
 													foodInfo[item[1]["Name"]][
-														"Icon"
+														"ShelfLife"
 													]
-												}
-												width="75"
-												height="75"
-											/>
-										</Col>
-										<Col>{item[1]["Name"]}</Col>
-										<Col>
-											{CalculateExpiration(
-												item[1]["TimeAdded"],
-												foodInfo[item[1]["Name"]][
-													"ShelfLife"
-												]
-											)}
-										</Col>
-									</Row>
-								</SwipeableListItem>
-							</SwipeableList>
-						);
-					})}
+												)}
+											</Col>
+										</Row>
+									</SwipeableListItem>
+
+							);
+						})}
+				</SwipeableList>
 			</Container>
 		</>
 	);
