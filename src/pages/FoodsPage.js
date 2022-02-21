@@ -78,11 +78,11 @@ const leadingActions = () => (
 	</LeadingActions>
   );
   
-  const trailingActions = () => (
+  const trailingActions = (item) => (
 	<TrailingActions>
 	  <SwipeAction
 		destructive={true}
-		onClick={() => console.info('trailing swipe action triggered')}
+		onClick={() => setData(`/UserFood/${userID}/${item}`, null)}
 	  >
 		Delete
 	  </SwipeAction>
@@ -144,7 +144,7 @@ export default function DisplayFoods() {
 						return (
 							<SwipeableList>
 								<SwipeableListItem
-									trailingActions={trailingActions()}
+									trailingActions={trailingActions(item[0])}
 								>
 									<Row
 										style={{ backgroundColor: "white" }}
