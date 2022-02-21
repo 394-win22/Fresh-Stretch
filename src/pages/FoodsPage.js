@@ -1,5 +1,6 @@
 import React from "react";
-import SwipeToDelete from "react-swipe-to-delete-ios";
+
+import { DeleteOutlined } from '@ant-design/icons'
 
 import {
 	LeadingActions,
@@ -7,6 +8,7 @@ import {
 	SwipeableListItem,
 	SwipeAction,
 	TrailingActions,
+	Type as ListType,
   } from 'react-swipeable-list';
   import 'react-swipeable-list/dist/styles.css';
 
@@ -84,8 +86,14 @@ const leadingActions = () => (
 		destructive={true}
 		onClick={() => setData(`/UserFood/${userID}/${item}`, null)}
 	  >
-		<div style={{background:"red"}}>
-			<p style={{color:"white", weight:"bold"}}>Delete</p>
+		<div className="actionContent">
+			<div className="itemColumnCentered">
+				<span className="icon">
+					<DeleteOutlined style={{ fontSize: '300%'}}/>
+					Delete
+				</span>
+			</div>
+				
 		</div>
 	  </SwipeAction>
 	</TrailingActions>
@@ -96,6 +104,10 @@ export default function DisplayFoods() {
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
 	);
+
+	const handleOnClick = id => () => {
+		console.log('[handle on click]', id);
+	  };
 
 	const handleDelete = (itemID) => {
 		console.log("Delete item");
@@ -139,45 +151,48 @@ export default function DisplayFoods() {
 					<Col>Food Item</Col>
 					<Col>Use By</Col>
 				</Row>
-				<SwipeableList>
-					{Object.entries(userFood)
-						.sort(compareItems)
-						.map((item) => {
-							return (
-									<SwipeableListItem
-										trailingActions={trailingActions(item[0])}
-										key={item[0]}
-									>
-										<Row
-											style={{ backgroundColor: "white" }}
-											className="py-2"
+				{/* <div className="basic-swipeable-list__container"> */}
+					<SwipeableList
+					fullSwipe={true}
+					type={ListType.IOS}>
+						{Object.entries(userFood)
+							.sort(compareItems)
+							.map((item) => {
+								return (
+										<SwipeableListItem
+											trailingActions={trailingActions(item[0])}
+											key={item[0]}
 										>
-											<Col>
-												<object
-													data={
+											<Row
+												style={{ backgroundColor: "white" }}
+												className="py-2"
+											>
+												<Col>
+													<object
+														data={
+															foodInfo[item[1]["Name"]][
+																"Icon"
+															]
+														}
+														width="75"
+														height="75"
+													/>
+												</Col>
+												<Col>{item[1]["Name"]}</Col>
+												<Col>
+													{CalculateExpiration(
+														item[1]["TimeAdded"],
 														foodInfo[item[1]["Name"]][
-															"Icon"
+															"ShelfLife"
 														]
-													}
-													width="75"
-													height="75"
-												/>
-											</Col>
-											<Col>{item[1]["Name"]}</Col>
-											<Col>
-												{CalculateExpiration(
-													item[1]["TimeAdded"],
-													foodInfo[item[1]["Name"]][
-														"ShelfLife"
-													]
-												)}
-											</Col>
-										</Row>
-									</SwipeableListItem>
-
-							);
-						})}
-				</SwipeableList>
+													)}
+												</Col>
+											</Row>
+										</SwipeableListItem>
+								);
+							})}
+					</SwipeableList>
+				{/* </div> */}
 			</Container>
 		</>
 	);
