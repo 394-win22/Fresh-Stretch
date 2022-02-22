@@ -2,7 +2,6 @@ import React from "react";
 import "./Footer.css";
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, AccountCircle } from "@mui/icons-material";
 import KitchenIcon from '@mui/icons-material/Kitchen'
 
 import Box from "@mui/material/Box";

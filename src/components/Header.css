@@ -7,13 +7,7 @@
 	position: fixed;
 	width: 100%;
     top: 0px;
-
-}
-
-.header > object{
-	left: 30.5%;
-	position: fixed;
-
+	
 }
 
 .header > svg{
@@ -27,9 +21,6 @@
 }
 
 .header-margin {
-	height: 5.5rem;
+	height: 6rem;
 	background-color: #E1DDD3;
-
-
-
 }
