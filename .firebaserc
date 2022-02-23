@@ -5,8 +5,11 @@
   "targets": {
     "fresh-stretch": {
       "hosting": {
-        "Dev": [
+        "development": [
           "fs-app-dev"
+        ],
+        "production": [
+          "fresh-stretch"
         ]
       }
     }

@@ -1,16 +1,33 @@
 {
-  "hosting": {
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+  "hosting": [ {
+      "target": "production",  // "blog" is the applied TARGET_NAME for the Hosting site "myapp-blog"
+      "public": "build",  // contents of this folder are deployed to the site "myapp-blog"
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    {
+      "target": "development",  // "blog" is the applied TARGET_NAME for the Hosting site "myapp-blog"
+      "public": "build",  // contents of this folder are deployed to the site "myapp-blog"
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
 }
