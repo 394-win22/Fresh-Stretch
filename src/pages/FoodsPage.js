@@ -3,7 +3,6 @@ import React from "react";
 import { DeleteOutlined } from '@ant-design/icons'
 
 import {
-	LeadingActions,
 	SwipeableList,
 	SwipeableListItem,
 	SwipeAction,
@@ -28,7 +27,7 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	const dif = expDate - today;
 
 	const day = 1000 * 60 * 60 * 24;
-	const week = day * 7;
+	
 
 	if (dif < 0) {
 		return (
@@ -64,21 +63,14 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 	return dif;
 };
 
-const getSvgs = (base) => {
-	var dataURI = "data:image/svg+xml;base64," + base;
-	console.log(base);
-	var svg = atob(base);
-	console.log(svg);
-	return svg;
-};
 
-const leadingActions = () => (
-	<LeadingActions>
-	  <SwipeAction onClick={() => console.info('leading swipe action triggered')}>
-		Action name
-	  </SwipeAction>
-	</LeadingActions>
-  );
+// const leadingActions = () => (
+// 	<LeadingActions>
+// 	  <SwipeAction onClick={() => console.info('leading swipe action triggered')}>
+// 		Action name
+// 	  </SwipeAction>
+// 	</LeadingActions>
+//   );
   
   const trailingActions = (item) => (
 	<TrailingActions>
@@ -105,14 +97,14 @@ export default function DisplayFoods() {
 		`/UserFood/${userID}`
 	);
 
-	const handleOnClick = id => () => {
-		console.log('[handle on click]', id);
-	  };
+	// const handleOnClick = id => () => {
+	// 	console.log('[handle on click]', id);
+	//   };
 
-	const handleDelete = (itemID) => {
-		console.log("Delete item");
-		// setData(`/UserFood/${userID}/${itemID}`, null);
-	};
+	// const handleDelete = (itemID) => {
+	// 	console.log("Delete item");
+	// 	// setData(`/UserFood/${userID}/${itemID}`, null);
+	// };
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 
@@ -177,6 +169,7 @@ export default function DisplayFoods() {
 															}
 															width="75"
 															height="75"
+															aria-label="food-icon"
 														/>
 													</div>
 													<div className="itemColumn">{item[1]["Name"]}</div>

@@ -42,8 +42,8 @@ export const useData = (path, transform) => {
 
 	useEffect(() => {
 		const dbRef = ref(database, path);
-		const devMode =
-			!process.env.NODE_ENV || process.env.NODE_ENV === "development";
+		// const devMode =
+		// 	!process.env.NODE_ENV || process.env.NODE_ENV === "development";
 		// if (devMode) {
 		// 	console.log(`loading ${path}`);
 		// }

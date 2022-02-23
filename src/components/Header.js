@@ -13,7 +13,7 @@ const Header = () => {
 						<AddFood padding-left="5em"/>
 					</Col>
 					<Col className="align-self-center align-items-center justify-content-center col">
-						<object data="Logo1.svg" width="150" height="85" text-align="center"></object>
+						<object data="Logo1.svg" width="150" height="85" text-align="center" aria-label="Logo"></object>
 					</Col>
 					<Col>
 					</Col>
