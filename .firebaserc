@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "fresh-stretch"
+  },
+  "targets": {
+    "fresh-stretch": {
+      "hosting": {
+        "development": [
+          "fs-app-dev"
+        ],
+        "production": [
+          "fresh-stretch"
+        ]
+      }
+    }
   }
 }
