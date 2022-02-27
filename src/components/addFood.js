@@ -13,7 +13,11 @@ import Avatar from "@mui/material/Avatar";
 
 import { PlusSquareFill } from "react-bootstrap-icons";
 
-import { userID, useData, pushData } from "../utils/firebase";
+import {useUserState, useData, pushData } from "../utils/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 	foodInfo = Object.entries(foodInfo);
@@ -68,12 +72,12 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 	);
 }
 
-const saveFood = async (foodInfo, checked) => {
+const saveFood = async (foodInfo, checked, uid) => {
 	for (var i in checked) {
 		var today = new Date();
 		var index = parseInt(checked[i]);
 		try {
-			await pushData(`/UserFood/${userID}`, {
+			await pushData(`/UserFood/${uid}`, {
 				Name: foodInfo[index][0],
 				TimeAdded: today.getTime(),
 			});
@@ -85,6 +89,24 @@ const saveFood = async (foodInfo, checked) => {
 };
 
 const AddFood = () => {
+	const auth = getAuth();
+	let [uid, setUID] = useState(null);
+	let navigate = useNavigate();
+	useEffect(() => {
+		let authToken = sessionStorage.getItem('Auth Token')
+
+		if (!authToken) {
+			navigate('/login')
+		}
+	}, [navigate])
+	onAuthStateChanged(auth, (authuser) => {
+		if (authuser) {
+		  	// The user's ID, unique to the Firebase project. Do NOT use
+        	// this value to authenticate with the backend server
+        	// Use User.getToken() instead.
+        	setUID(authuser.uid);
+		}
+	  });
 	const [open, setOpen] = React.useState(false);
 
 	const [checked, setChecked] = React.useState([]);
@@ -124,7 +146,7 @@ const AddFood = () => {
 								saveFood(
 									Object.entries(foodInfo),
 									checked,
-									userID
+									uid
 								);
 								setOpen(false);
 							}}

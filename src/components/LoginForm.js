@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './LoginForm.css';
 import { signInWithEmailAndPassWD, signInWithGoogle } from '../utils/firebase';
+import { useNavigate } from "react-router-dom";
 
-const Form = () => {    
+const Form = () => {   
+    let navigate = useNavigate(); 
     const [inputs, setinputs] = useState({
         email: "",
         password: ""
@@ -105,7 +107,7 @@ const Form = () => {
                             </form>
                             <hr />
                             <div className="boxes-login">
-                                <span onClick={() => signInWithGoogle()}><img src="https://imgur.com/XnY9cKl.png" /></span>
+                                <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" /></span>
                                 {/* <span><img src="https://imgur.com/ODlSChL.png" /></span>
                                 <span><img src="https://imgur.com/mPBRdQt.png" /></span> */}
                             </div>
