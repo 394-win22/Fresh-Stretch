@@ -3,6 +3,9 @@ import "./Footer.css";
 
 import { Link, useLocation } from "react-router-dom";
 import KitchenIcon from '@mui/icons-material/Kitchen'
+import {
+	AccountCircle,
+} from "@mui/icons-material";
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -16,7 +19,12 @@ const tabs = [
 		route: "/",
 		icon: KitchenIcon,
 		label: "Home",
-	},
+	}, 
+	{
+		route: "/user",
+		icon: AccountCircle,
+		label: "User",
+	}
 ];
 
 const Footer = () => {

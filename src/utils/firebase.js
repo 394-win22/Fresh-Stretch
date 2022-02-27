@@ -3,6 +3,15 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, onValue, ref, push, set } from "firebase/database";
 import { getStorage } from "firebase/storage";
 import { useState, useEffect } from "react";
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	createUserWithEmailAndPassword,
+	GoogleAuthProvider,
+	onIdTokenChanged,
+	signInWithPopup,
+	signOut,
+} from "firebase/auth";
 
 // user id temporary
 export const userID = "50ea90df-2a1f-4dfe-b768-c1eb730ed531";
@@ -22,6 +31,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 export const storage = getStorage(app);
+
+export const userId = "C0XdX2OmOQZKzVknueo4xGtsgvI2";
 
 export const deleteData = (path) => {
 	set(ref(database, path), null);
@@ -67,4 +78,49 @@ export const useData = (path, transform) => {
 	}, [path, transform]);
 
 	return [localData, loading, error];
+};
+
+export const getAllData = (data) => data;
+
+export const getItemsFromUser = (userID, item) => `/${item}/${userID}`;
+
+export const getClothingItem = (type, userID, clothingID) => {
+	return `/${type}/${userID}/${clothingID}`;
+};
+
+export const signInWithGoogle = () => {
+	signInWithPopup(getAuth(app), new GoogleAuthProvider());
+};
+
+const firebaseSignOut = () => signOut(getAuth(app));
+export { firebaseSignOut as signOut };
+
+export const useUserState = () => {
+	const [user, setUser] = useState();
+
+	useEffect(() => {
+		onIdTokenChanged(getAuth(app), setUser);
+	}, []);
+
+	return [user];
+};
+
+export const signInWithEmailAndPassWD = (inputs) => {
+	const authentication = getAuth(app);
+	signInWithEmailAndPassword(authentication, inputs.email, inputs.password)
+		.then((response) => {
+			sessionStorage.setItem(
+				"Auth Token",
+				response._tokenResponse.refreshToken
+			);
+			return true;
+		})
+		.catch((error) => {
+			if (
+				error.code === "auth/wrong-password" ||
+				error.code === "auth/user-not-found"
+			) {
+				return false;
+			}
+		});
 };

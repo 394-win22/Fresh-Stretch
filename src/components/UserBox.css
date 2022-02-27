@@ -1,0 +1,38 @@
+.user-card {
+	width: 75%;
+	max-width: 300px;
+	background-color: #efefef;
+	border: none;
+	cursor: pointer;
+	transition: all 0.5s;
+}
+
+.name {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.idd {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.idd1 {
+	font-size: 12px;
+}
+
+.user-text span {
+	font-size: 13px;
+	color: #545454;
+	font-weight: 500;
+}
+
+.join {
+	font-size: 14px;
+	color: #888888;
+	font-weight: bold;
+}
+
+.date {
+	background-color: #ccc;
+}
