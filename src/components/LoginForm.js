@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './LoginForm.css';
 import { signInWithEmailAndPassWD, signInWithGoogle } from '../utils/firebase';
+import { useNavigate } from "react-router-dom";
 
-const Form = () => {    
+const Form = () => {   
+    let navigate = useNavigate(); 
     const [inputs, setinputs] = useState({
         email: "",
         password: ""
@@ -73,19 +75,18 @@ const Form = () => {
                 <div className="card-login">
                     <div className="form-login">
                         <div className="left-side">
-                            <img src="https://image.s5a.com/is/image/saks/010422_WMHP_3UP_1_NEWYEARNEWJEANSRESOLUTION?scl=1&qlt=84&fmt=jpg" />
+                            <img src="https://i.pinimg.com/originals/ec/44/43/ec444365208e7c8695734dec1ae6abb7.jpg" />
                         </div>
     
                         <div className="right-side">
                             <div className="register">
                                 <p>Not a member? <a href="#">Register Now</a></p>
                             </div>
-    
-                            <div className="hello">
-                                <h2>Welcome to SET!</h2>
-                                <h4>Set your cloSET</h4>
+
+                            <div className="logo-login">
+                                <object data="Logo1.svg" width="240" height="125" text-align="center" aria-label="Logo"></object>
                             </div>
-    
+
                             <form onSubmit={submitForm}>
     
                                 <div className="input_text">
@@ -106,7 +107,7 @@ const Form = () => {
                             </form>
                             <hr />
                             <div className="boxes-login">
-                                <span onClick={() => signInWithGoogle()}><img src="https://imgur.com/XnY9cKl.png" /></span>
+                                <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" /></span>
                                 {/* <span><img src="https://imgur.com/ODlSChL.png" /></span>
                                 <span><img src="https://imgur.com/mPBRdQt.png" /></span> */}
                             </div>

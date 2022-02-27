@@ -1,7 +1,5 @@
 import React from "react";
-
 import { DeleteOutlined } from '@ant-design/icons'
-
 import {
 	SwipeableList,
 	SwipeableListItem,
@@ -14,10 +12,15 @@ import {
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useUserState, useData, setData } from "../utils/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
-import { userID, useData, setData } from "../utils/firebase";
+
 
 import "./FoodsPage.css";
+
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
@@ -72,11 +75,11 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 // 	</LeadingActions>
 //   );
   
-  const trailingActions = (item) => (
+  const trailingActions = (item, uid) => (
 	<TrailingActions>
 	  <SwipeAction
 		destructive={true}
-		onClick={() => setData(`/UserFood/${userID}/${item}`, null)}
+		onClick={() => setData(`/UserFood/${uid}/${item}`, null)}
 	  >
 		<div className="actionContent">
 			<div className="itemColumnCentered">
@@ -93,8 +96,26 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
   
 
 export default function DisplayFoods() {
+	const auth = getAuth();
+	let [uid, setUID] = useState(null);
+	let navigate = useNavigate();
+	useEffect(() => {
+		let authToken = sessionStorage.getItem('Auth Token')
+
+		if (!authToken) {
+			navigate('/login')
+		}
+	}, [navigate])
+	onAuthStateChanged(auth, (authuser) => {
+		if (authuser) {
+		  	// The user's ID, unique to the Firebase project. Do NOT use
+        	// this value to authenticate with the backend server
+        	// Use User.getToken() instead.
+        	setUID(authuser.uid);
+		}
+	  });
 	const [userFood, userFoodLoading, userFoodError] = useData(
-		`/UserFood/${userID}`
+		`/UserFood/${uid}`
 	);
 
 	// const handleOnClick = id => () => {
@@ -152,7 +173,7 @@ export default function DisplayFoods() {
 							.map((item) => {
 								return (
 										<SwipeableListItem
-											trailingActions={trailingActions(item[0])}
+											trailingActions={trailingActions(item[0],uid)}
 											key={item[0]}
 										>
 											<div className="itemContent">
