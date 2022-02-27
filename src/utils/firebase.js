@@ -13,8 +13,6 @@ import {
 	signOut,
 } from "firebase/auth";
 
-// user id temporary
-export const userID = "50ea90df-2a1f-4dfe-b768-c1eb730ed531";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -32,7 +30,6 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 export const storage = getStorage(app);
 
-export const userId = "C0XdX2OmOQZKzVknueo4xGtsgvI2";
 
 export const deleteData = (path) => {
 	set(ref(database, path), null);

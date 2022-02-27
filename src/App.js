@@ -9,8 +9,10 @@ import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import FoodsPage from "./pages/FoodsPage";
 import UserPage from "./pages/UserPage";
+import { useUserState } from "./utils/firebase";
 
 function App() {
+	console.log(useUserState())
 	return (
 		<div>
 			<BrowserRouter>

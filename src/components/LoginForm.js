@@ -73,7 +73,7 @@ const Form = () => {
                 <div className="card-login">
                     <div className="form-login">
                         <div className="left-side">
-                            <img src="https://image.s5a.com/is/image/saks/010422_WMHP_3UP_1_NEWYEARNEWJEANSRESOLUTION?scl=1&qlt=84&fmt=jpg" />
+                            <img src="https://i.pinimg.com/originals/ec/44/43/ec444365208e7c8695734dec1ae6abb7.jpg" />
                         </div>
     
                         <div className="right-side">
