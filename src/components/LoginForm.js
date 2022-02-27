@@ -80,12 +80,11 @@ const Form = () => {
                             <div className="register">
                                 <p>Not a member? <a href="#">Register Now</a></p>
                             </div>
-    
-                            <div className="hello">
-                                <h2>Welcome to SET!</h2>
-                                <h4>Set your cloSET</h4>
+
+                            <div className="logo-login">
+                                <object data="Logo1.svg" width="240" height="125" text-align="center" aria-label="Logo"></object>
                             </div>
-    
+
                             <form onSubmit={submitForm}>
     
                                 <div className="input_text">
