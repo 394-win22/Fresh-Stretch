@@ -18,7 +18,7 @@ const tabs = [
 	{
 		route: "/",
 		icon: KitchenIcon,
-		label: "Home",
+		label: "Fridge",
 	}, 
 	{
 		route: "/user",

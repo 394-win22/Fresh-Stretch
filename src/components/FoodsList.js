@@ -16,10 +16,7 @@ import { useData, setData } from "../utils/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-
-
-
-import "./FoodsPage.css";
+import "./FoodsList.css";
 
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
@@ -65,37 +62,9 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 
 	return dif;
 };
-
-
-// const leadingActions = () => (
-// 	<LeadingActions>
-// 	  <SwipeAction onClick={() => console.info('leading swipe action triggered')}>
-// 		Action name
-// 	  </SwipeAction>
-// 	</LeadingActions>
-//   );
-  
-  const trailingActions = (item, uid) => (
-	<TrailingActions>
-	  <SwipeAction
-		destructive={true}
-		onClick={() => setData(`/UserFood/${uid}/${item}`, null)}
-	  >
-		<div className="actionContent">
-			<div className="itemColumnCentered">
-				<span className="icon">
-					<DeleteOutlined style={{ fontSize: '300%'}}/>
-					Delete
-				</span>
-			</div>
-				
-		</div>
-	  </SwipeAction>
-	</TrailingActions>
-  );
   
 
-export default function DisplayFoods() {
+export default function DisplayFoods({ StorageLocation }) {
 	const auth = getAuth();
 	let [uid, setUID] = useState(null);
 	let navigate = useNavigate();
@@ -115,8 +84,27 @@ export default function DisplayFoods() {
 		}
 	  });
 	const [userFood, userFoodLoading, userFoodError] = useData(
-		`/UserFood/${uid}`
+		`/${StorageLocation}/${uid}`
 	);
+
+	const trailingActions = (item, uid) => (
+		<TrailingActions>
+		  <SwipeAction
+			destructive={true}
+			onClick={() => setData(`/${StorageLocation}/${uid}/${item}`, null)}
+		  >
+			<div className="actionContent">
+				<div className="itemColumnCentered">
+					<span className="icon">
+						<DeleteOutlined style={{ fontSize: '300%'}}/>
+						Delete
+					</span>
+				</div>
+					
+			</div>
+		  </SwipeAction>
+		</TrailingActions>
+	  );
 
 	// const handleOnClick = id => () => {
 	// 	console.log('[handle on click]', id);
@@ -124,7 +112,7 @@ export default function DisplayFoods() {
 
 	// const handleDelete = (itemID) => {
 	// 	console.log("Delete item");
-	// 	// setData(`/UserFood/${userID}/${itemID}`, null);
+	// 	// setData(`/${StorageLocation}/${userID}/${itemID}`, null);
 	// };
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
@@ -164,7 +152,6 @@ export default function DisplayFoods() {
 					<Col>Food Item</Col>
 					<Col>Use By</Col>
 				</Row>
-				{/* <div className="basic-swipeable-list__container"> */}
 					<SwipeableList
 					fullSwipe={true}
 					type={ListType.IOS}>
@@ -177,10 +164,6 @@ export default function DisplayFoods() {
 											key={item[0]}
 										>
 											<div className="itemContent">
-												{/* <div
-													style={{ backgroundColor: "white" }}
-													className="itemRow"
-												> */}
 													<div className="itemColumn">
 														<object
 															data={
@@ -202,13 +185,11 @@ export default function DisplayFoods() {
 															]
 														)}
 													</div>
-												{/* </div> */}
 											</div>
 										</SwipeableListItem>
 								);
 							})}
 					</SwipeableList>
-				{/* </div> */}
 			</Container>
 		</>
 	);
