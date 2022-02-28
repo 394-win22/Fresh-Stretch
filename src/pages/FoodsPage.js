@@ -53,6 +53,18 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	}
 };
 
+const calcDays = (timeAdded, shelfLife) => {
+	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
+	const expDate = new Date(timeAdded + shelfLife);
+
+	const today = Date.now();
+	const dif = expDate - today;
+
+	const day = 1000 * 60 * 60 * 24;
+	
+	return Math.floor(dif / day);
+};
+
 const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
 	const expDate = new Date(timeAdded + shelfLife);
@@ -134,31 +146,49 @@ export default function DisplayFoods() {
 	return (
 		<>
 			<Container>
-				<Modal show={showModal} onHide={handleClose}>
-					<Modal.Header closeButton>
-					<Modal.Title>{foodInfo[currFoodItem]["Name"]}
-					<object
-						data={
-							foodInfo[currFoodItem][
-								"Icon"
-							]
-						}
-						width="30"
-						height="30"
-						aria-label="food-icon"
-					/></Modal.Title>
-
-					</Modal.Header>
-					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-					<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handleClose}>
-						Save Changes
-					</Button>
-					</Modal.Footer>
-      			</Modal>
+				{currFoodItem &&
+					<Modal show={showModal} onHide={handleClose}>
+						<Modal.Header closeButton>
+						<Modal.Title>
+							<object
+								data={
+									foodInfo[currFoodItem[1]["Name"]][
+										"Icon"
+									]
+								}
+								width="30"
+								height="30"
+								aria-label="food-icon"
+							/>
+							<p>{currFoodItem[1]["Name"]}</p>
+						</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<h3>Tips for Storage</h3>
+							<p>{foodInfo[currFoodItem[1]["Name"]]["Tips"]}</p>
+							<form>
+								<label>
+									Edit Days
+									<input type="number" name="days" min="0" value=
+										{calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])}
+									/>
+								</label>
+								{/* <input type="submit" value="Submit" /> */}
+							</form>
+						</Modal.Body>
+						<Modal.Footer>
+						<Button variant="secondary" onClick={handleClose}>
+							Close
+						</Button>
+						<Button variant="primary" onClick={() => {
+							handleClose()
+							setData(`/UserFood/${userID}/${currFoodItem[0]}`, null)
+						}}>
+							Delete Item
+						</Button>
+						</Modal.Footer>
+					</Modal>
+				}
 				<Row id="header" className="py-3">
 					<Col></Col>
 					<Col>Food Item</Col>
@@ -169,8 +199,7 @@ export default function DisplayFoods() {
 							.map((item) => {
 								return (
 									<div className="itemContent" onClick={()=>{
-										console.log(item)
-										setCurrFoodItem(item[1]["Name"])
+										setCurrFoodItem(item)
 										handleShow()
 									}}>
 											<div className="itemColumn">
