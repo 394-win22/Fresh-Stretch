@@ -7,7 +7,8 @@ import {
 	TrailingActions,
 	Type as ListType,
   } from 'react-swipeable-list';
-  import 'react-swipeable-list/dist/styles.css';
+import 'react-swipeable-list/dist/styles.css';
+import AddFood from "../components/addFood.js";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -148,7 +149,7 @@ export default function DisplayFoods({ StorageLocation }) {
 		<>
 			<Container>
 				<Row id="header" className="py-3">
-					<Col></Col>
+					<Col><AddFood padding-left="5em" StorageLocation={StorageLocation} /></Col>
 					<Col>Food Item</Col>
 					<Col>Use By</Col>
 				</Row>

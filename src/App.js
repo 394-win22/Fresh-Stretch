@@ -19,7 +19,7 @@ function App() {
 			
 				<Routes>
 					<Route exact path="/login" element={<LoginPage />} />
-					<Route path="/" element={<><Header StorageLocation="Fridge" /><FridgePage /><Footer/></>} />
+					<Route path="/" element={<><Header /><FridgePage /><Footer/></>} />
 					<Route path="/user" element={<><Header/><UserPage /><Footer/></>} />
 				</Routes>
 		
