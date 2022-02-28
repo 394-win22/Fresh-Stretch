@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import {
 	getAuth,
 	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	onIdTokenChanged,
 	signInWithPopup,
@@ -96,7 +95,7 @@ export const signInWithGoogle = (navigate) => {
 			token
 		);
 		// The signed-in user info.
-		const user = result.user;
+		// const user = result.user;
 		navigate('/')
 	  }).catch((error) => {
 		// Handle Errors here.
@@ -105,7 +104,7 @@ export const signInWithGoogle = (navigate) => {
 		// The email of the user's account used.
 		const email = error.email;
 		// The AuthCredential type that was used.
-		const credential = GoogleAuthProvider.credentialFromError(error);
+		// const credential = GoogleAuthProvider.credentialFromError(error);
 		console.log(errorCode, errorMessage, email);
 		return false;
 	  });

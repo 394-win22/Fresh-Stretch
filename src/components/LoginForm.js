@@ -21,7 +21,7 @@ const Form = () => {
     const inputEvent = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        if (name == "email") {
+        if (name === "email") {
             if (value.length > 0) {
                 setdanger(true);
             }
@@ -46,10 +46,10 @@ const Form = () => {
         e.preventDefault();
         setwarnemail(false);
         setwarnpass(false);
-        if (inputs.password == "") {
+        if (inputs.password === "") {
             setwarnpass(true);
         }
-        if (inputs.email == "") {
+        if (inputs.email === "") {
             setwarnemail(true);
         } else if (!validateEmail(inputs.email)) {
             setwarnemail(true);
@@ -60,7 +60,7 @@ const Form = () => {
     };
 
     const Eye = () => {
-        if (pass == "password") {
+        if (pass === "password") {
             setpass("text");
             seteye(false);
         } else {
@@ -75,13 +75,13 @@ const Form = () => {
                 <div className="card-login">
                     <div className="form-login">
                         <div className="left-side">
-                            <img src="https://i.pinimg.com/originals/ec/44/43/ec444365208e7c8695734dec1ae6abb7.jpg" />
+                            <img src="https://i.pinimg.com/originals/ec/44/43/ec444365208e7c8695734dec1ae6abb7.jpg" alt="Oranges on trees"/>
                         </div>
     
                         <div className="right-side">
-                            <div className="register">
+                            {/* <div className="register">
                                 <p>Not a member? <a href="#">Register Now</a></p>
-                            </div>
+                            </div> */}
 
                             <div className="logo-login">
                                 <object data="Logo1.svg" width="240" height="125" text-align="center" aria-label="Logo"></object>
@@ -107,7 +107,7 @@ const Form = () => {
                             </form>
                             <hr />
                             <div className="boxes-login">
-                                <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" /></span>
+                                <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" alt="Google Logo" /></span>
                                 {/* <span><img src="https://imgur.com/ODlSChL.png" /></span>
                                 <span><img src="https://imgur.com/mPBRdQt.png" /></span> */}
                             </div>

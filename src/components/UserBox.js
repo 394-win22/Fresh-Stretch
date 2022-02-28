@@ -27,6 +27,7 @@ const UserBox = () => {
 				setPhotoURL(authuser.photoURL);
 			}
 		  	setEmailVerified(authuser.emailVerified);
+			console.log("Email Verified: ", emailVerified);
 			let creationTimeArray = authuser.metadata.creationTime.split(" ")
 			setCreationTime(creationTimeArray[2] + " " + creationTimeArray[3]);
 
@@ -48,7 +49,7 @@ const UserBox = () => {
         <div className="container mt-4 mb-4 d-flex justify-content-center">
         <div className="card user-card p-4">
             <div className=" image d-flex flex-column justify-content-center align-items-center"> <button className="btn btn-secondary"> 
-            <img src={photoURL} height="100" width="100" /></button> 
+            <img src={photoURL} height="100" width="100" alt="User Profile" /></button> 
             <span className="name mt-3">{displayName}</span> <span className="idd">{email}</span>
                 <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">{uid}</span> <span><i className="fa fa-copy"></i></span> </div>
                 {/* <div className=" d-flex mt-2"> <button className="btn btn-dark">Edit Profile</button> </div> */}

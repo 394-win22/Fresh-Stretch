@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from '../components/LoginForm'
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {

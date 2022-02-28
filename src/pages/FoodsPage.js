@@ -12,7 +12,7 @@ import {
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useUserState, useData, setData } from "../utils/firebase";
+import { useData, setData } from "../utils/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";

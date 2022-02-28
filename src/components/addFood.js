@@ -13,7 +13,7 @@ import Avatar from "@mui/material/Avatar";
 
 import { PlusSquareFill } from "react-bootstrap-icons";
 
-import {useUserState, useData, pushData } from "../utils/firebase";
+import { useData, pushData } from "../utils/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
