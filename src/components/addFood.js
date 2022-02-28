@@ -72,12 +72,12 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 	);
 }
 
-const saveFood = async (foodInfo, checked, uid) => {
+const saveFood = async (foodInfo, checked, uid, StorageLocation) => {
 	for (var i in checked) {
 		var today = new Date();
 		var index = parseInt(checked[i]);
 		try {
-			await pushData(`/UserFood/${uid}`, {
+			await pushData(`/${StorageLocation}/${uid}`, {
 				Name: foodInfo[index][0],
 				TimeAdded: today.getTime(),
 			});
@@ -88,7 +88,7 @@ const saveFood = async (foodInfo, checked, uid) => {
 	}
 };
 
-const AddFood = () => {
+const AddFood = ({StorageLocation}) => {
 	const auth = getAuth();
 	let [uid, setUID] = useState(null);
 	let navigate = useNavigate();
@@ -149,7 +149,8 @@ const AddFood = () => {
 									saveFood(
 										Object.entries(foodInfo),
 										checked,
-										uid
+										uid,
+										StorageLocation
 									);
 									setOpen(false);
 								}}
