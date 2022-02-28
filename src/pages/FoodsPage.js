@@ -103,7 +103,7 @@ export default function DisplayFoods() {
 	);
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
-
+	const [currFoodItem, setCurrFoodItem] = useState();
 	if (userFoodError) return <h1>{userFoodError}</h1>;
 	if (userFoodLoading) return <h1>Loading list of foods...</h1>;
 
@@ -136,7 +136,18 @@ export default function DisplayFoods() {
 			<Container>
 				<Modal show={showModal} onHide={handleClose}>
 					<Modal.Header closeButton>
-					<Modal.Title>Modal heading</Modal.Title>
+					<Modal.Title>{foodInfo[currFoodItem]["Name"]}
+					<object
+						data={
+							foodInfo[currFoodItem][
+								"Icon"
+							]
+						}
+						width="30"
+						height="30"
+						aria-label="food-icon"
+					/></Modal.Title>
+
 					</Modal.Header>
 					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
 					<Modal.Footer>
@@ -158,7 +169,9 @@ export default function DisplayFoods() {
 							.map((item) => {
 								return (
 									<div className="itemContent" onClick={()=>{
-
+										console.log(item)
+										setCurrFoodItem(item[1]["Name"])
+										handleShow()
 									}}>
 											<div className="itemColumn">
 												<object
