@@ -1,5 +1,5 @@
-import React from "react";
-
+import {React, useState} from "react";
+import {Modal, Button} from "react-bootstrap"
 import { DeleteOutlined } from '@ant-design/icons'
 
 import {
@@ -93,18 +93,14 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
   
 
 export default function DisplayFoods() {
+	const [showModal, setShowModal] = useState(false);
+
+  	const handleClose = () => setShowModal(false);
+  	const handleShow = () => setShowModal(true);
+
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
 	);
-
-	// const handleOnClick = id => () => {
-	// 	console.log('[handle on click]', id);
-	//   };
-
-	// const handleDelete = (itemID) => {
-	// 	console.log("Delete item");
-	// 	// setData(`/UserFood/${userID}/${itemID}`, null);
-	// };
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 
@@ -138,56 +134,56 @@ export default function DisplayFoods() {
 	return (
 		<>
 			<Container>
+				<Modal show={showModal} onHide={handleClose}>
+					<Modal.Header closeButton>
+					<Modal.Title>Modal heading</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+					<Modal.Footer>
+					<Button variant="secondary" onClick={handleClose}>
+						Close
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Save Changes
+					</Button>
+					</Modal.Footer>
+      			</Modal>
 				<Row id="header" className="py-3">
 					<Col></Col>
 					<Col>Food Item</Col>
-					<Col>Use By</Col>
+					<Col>Use Within</Col>
 				</Row>
-				{/* <div className="basic-swipeable-list__container"> */}
-					<SwipeableList
-					fullSwipe={true}
-					type={ListType.IOS}>
 						{Object.entries(userFood)
 							.sort(compareItems)
 							.map((item) => {
 								return (
-										<SwipeableListItem
-											trailingActions={trailingActions(item[0])}
-											key={item[0]}
-										>
-											<div className="itemContent">
-												{/* <div
-													style={{ backgroundColor: "white" }}
-													className="itemRow"
-												> */}
-													<div className="itemColumn">
-														<object
-															data={
-																foodInfo[item[1]["Name"]][
-																	"Icon"
-																]
-															}
-															width="75"
-															height="75"
-															aria-label="food-icon"
-														/>
-													</div>
-													<div className="itemColumn">{item[1]["Name"]}</div>
-													<div className="itemColumn">
-														{CalculateExpiration(
-															item[1]["TimeAdded"],
-															foodInfo[item[1]["Name"]][
-																"ShelfLife"
-															]
-														)}
-													</div>
-												{/* </div> */}
+									<div className="itemContent" onClick={()=>{
+
+									}}>
+											<div className="itemColumn">
+												<object
+													data={
+														foodInfo[item[1]["Name"]][
+															"Icon"
+														]
+													}
+													width="75"
+													height="75"
+													aria-label="food-icon"
+												/>
 											</div>
-										</SwipeableListItem>
+											<div className="itemColumn">{item[1]["Name"]}</div>
+											<div className="itemColumn">
+												{CalculateExpiration(
+													item[1]["TimeAdded"],
+													foodInfo[item[1]["Name"]][
+														"ShelfLife"
+													]
+												)}
+											</div>
+									</div>
 								);
 							})}
-					</SwipeableList>
-				{/* </div> */}
 			</Container>
 		</>
 	);
