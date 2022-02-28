@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container, Row} from "react-bootstrap";
 
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, DialogActions } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -141,20 +141,22 @@ const AddFood = () => {
 								setChecked={setChecked}
 							/>
 						</Row>
-						<Button
-							onClick={() => {
-								saveFood(
-									Object.entries(foodInfo),
-									checked,
-									uid
-								);
-								setOpen(false);
-							}}
-						>
-							Confirm
-						</Button>
 					</Container>
 				</DialogContent>
+				<DialogActions>
+					<Button
+								onClick={() => {
+									saveFood(
+										Object.entries(foodInfo),
+										checked,
+										uid
+									);
+									setOpen(false);
+								}}
+							>
+								Confirm
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</>
 	);
