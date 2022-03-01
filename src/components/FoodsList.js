@@ -155,7 +155,7 @@ export default function DisplayFoods({ StorageLocation }) {
 				<Row id="header" className="py-3">
 					<Col><AddFood padding-left="5em" StorageLocation={StorageLocation} /></Col>
 					<Col>Food Item</Col>
-					<Col>Use By</Col>
+					<Col>Use Within</Col>
 				</Row>
 					<SwipeableList
 					fullSwipe={true}
