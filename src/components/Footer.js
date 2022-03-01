@@ -13,6 +13,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 const tabs = [
 	{
 		route: "/",
@@ -46,6 +48,14 @@ const Footer = () => {
 		}
 	}
 
+	const navTheme = createTheme({
+		palette: {
+			primary: {
+				main: '#ff914d'
+			}
+		}
+	})
+
 	const [value, setValue] = React.useState(routeIndex);
 	if (pathname === "/login") return null;
 
@@ -62,6 +72,7 @@ const Footer = () => {
 				}}
 				elevation={4}
 			>
+				<ThemeProvider theme={navTheme}>
 				<BottomNavigation
 					value={value}
 					onChange={(event, newValue) => {
@@ -88,6 +99,7 @@ const Footer = () => {
 						);
 					})}
 				</BottomNavigation>
+				</ThemeProvider>
 				<div className="footer-margin"></div>
 			</Paper>
 		</Box>
