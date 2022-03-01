@@ -2,12 +2,12 @@ import React from "react";
 import "./Header.css";
 import {Container, Row, Col} from "react-bootstrap"
 
-const Header = ({StorageLocation}) => {
+const Header = () => {
 	return (
 		<>
             <div className="header">
 				<Container>
-				<Row className="justify-content-left align-items-center align-self-left">
+				<Row>
 					<Col className="align-self-center align-items-center justify-content-center col">
 						<object data="Logo1.svg" width="150" height="85" text-align="center" aria-label="Logo"></object>
 					</Col>

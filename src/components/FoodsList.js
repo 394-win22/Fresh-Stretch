@@ -123,10 +123,14 @@ export default function DisplayFoods({ StorageLocation }) {
 
 	if (!userFood) {
 		return (
-			<div style={{ marginTop: "50%", textAlign: "center" }}>
-				<p>Your fridge is empty.</p>
-				<p>Click on the + icon to add some items.</p>
-			</div>
+			
+			<Container style={{height:"80vh", width:"100vw"}} className="d-flex justify-content-center">
+				<Row className="justify-content-center align-self-center text-center">
+							<AddFood StorageLocation={StorageLocation} />
+							<p className="mt-2">Your {StorageLocation.toLowerCase()} is empty.
+							<br/>Click on the + icon to add some items.</p>
+				</Row>
+			</Container>
 		);
 	}
 

@@ -1,9 +1,9 @@
 import DisplayFoods from '../components/FoodsList'
 
-const FoodsPage = () => {
+const FridgePage = () => {
     return (
         <DisplayFoods StorageLocation="Fridge" />
     );
 };
 
-export default FoodsPage;
+export default FridgePage;
