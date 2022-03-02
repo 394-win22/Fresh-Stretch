@@ -101,7 +101,7 @@ const Form = () => {
                                     <p>Forget Password</p>
                                 </div>
                                 <div className="btn-login">
-                                    <button type="submit">Sign in</button>
+                                    <button data-cy="signinbutton" type="submit">Sign in</button>
                                 </div>
 
                             </form>
