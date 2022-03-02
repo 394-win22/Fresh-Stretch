@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { signOut } from '../utils/firebase'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Button from '@mui/material/Button';
+import sendEmail from '../utils/sendmail';
 import './UserBox.css';
 
 const UserBox = () => {
@@ -45,6 +47,11 @@ const UserBox = () => {
         navigate('/login');
     }
 
+	const handleEmail = () => {
+		let html = "";
+		sendEmail(displayName, email, html);
+	}
+
     return (
         <div className="container mt-4 mb-4 d-flex justify-content-center">
         <div className="card user-card p-4">
@@ -53,7 +60,8 @@ const UserBox = () => {
             <span className="name mt-3">{displayName}</span> <span className="idd">{email}</span>
                 <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">{uid}</span> <span><i className="fa fa-copy"></i></span> </div>
                 {/* <div className=" d-flex mt-2"> <button className="btn btn-dark">Edit Profile</button> </div> */}
-                <div className=" d-flex mt-2"> <a href="/login" className="btn btn-danger" onClick={handleLogout}>Logout</a> </div>
+				<div className=" d-flex mt-2"><Button variant="contained" onClick={handleEmail}>Email</Button></div>
+                <div className=" d-flex mt-2"><Button variant="contained" color="error" onClick={handleLogout}>Logout</Button> </div>
                 <div className=" px-2 rounded mt-4 date "> <span className="join">User Since {creationTime}</span> </div>
             </div>
         </div>
