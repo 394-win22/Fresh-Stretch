@@ -89,9 +89,9 @@ const Form = () => {
 
                             <form onSubmit={submitForm}>
     
-                                <div className="input_text">
-                                    <input className={` ${warnemail ? "warning" : "" }`} type="text" pattern="[^\s]+" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
-                                    <p className={` ${danger ? "danger" : "" }`}><i className="fa fa-warning"></i>Please enter a valid email address.</p>
+                                <div className="input_text" >
+                                    <input data-cy="email" className={` ${warnemail ? "warning" : "" }`} type="text" pattern="[^\s]+" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
+                                    <p data-cy="emailwarn"className={` ${danger ? "danger" : "" }`} ><i className="fa fa-warning"></i>Please enter a valid email address.</p>
                                 </div>
                                 <div className="input_text">
                                     <input className={` ${warnpass ? "warning" : "" }`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
