@@ -143,6 +143,19 @@ export default function DisplayFoods() {
 		return x < y ? -1 : x > y ? 1 : 0;
 	};
 
+	const minusDay = () => {
+		var days = parseInt(document.getElementById("daysInput").value)
+		if(days > 0){
+			document.getElementById("daysInput").value = days - 1
+		}
+	}
+	const plusDay = () => {
+		var days = parseInt(document.getElementById("daysInput").value)
+		if(days < 100){
+			document.getElementById("daysInput").value = days+1
+		}
+	}
+
 	return (
 		<>
 			<Container>
@@ -150,7 +163,7 @@ export default function DisplayFoods() {
 					<Modal show={showModal} onHide={handleClose}>
 						<Modal.Header closeButton>
 						<Modal.Title>
-							<div style={{display:"flex"}}>
+							<div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
 							<object
 								data={
 									foodInfo[currFoodItem[1]["Name"]][
@@ -174,13 +187,13 @@ export default function DisplayFoods() {
 									Edit Days
 									<div class="input-group">
 										<span class="input-group-btn">
-											<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="days">
-												<MinusOutlined style={{paddingBottom:"5px"}}/>
+											<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
+												<MinusOutlined style={{paddingBottom:"5px"}} />
 											</button>
 										</span>
-										<input type="text" name="days" class="form-control input-number" value={calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<input id="daysInput" type="number" name="days" class="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"]))} min="0" max="100" style={{fontSize:"12pt"}}></input>
 										<span class="input-group-btn">
-											<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="days">
+											<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
 												<PlusOutlined style={{paddingBottom:"5px"}}/>
 											</button>
 										</span>
