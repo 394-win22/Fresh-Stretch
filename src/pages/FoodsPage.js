@@ -215,6 +215,7 @@ export default function DisplayFoods() {
 						<Modal.Footer>
 						<Button variant="secondary" onClick={() => {
 							handleClose()
+							
 							setData(`/UserFood/${userID}/${currFoodItem[0]/"TimeAdded"}`, null)
 						}}>
 							Save
