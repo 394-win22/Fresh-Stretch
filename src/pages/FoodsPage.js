@@ -109,6 +109,9 @@ export default function DisplayFoods() {
 
   	const handleClose = () => setShowModal(false);
   	const handleShow = () => setShowModal(true);
+	const handleSave = () => {
+		setShowModal(false)
+	}
 
 	const [userFood, userFoodLoading, userFoodError] = useData(
 		`/UserFood/${userID}`
@@ -116,6 +119,7 @@ export default function DisplayFoods() {
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 	const [currFoodItem, setCurrFoodItem] = useState();
+	const [changeDays, setChangeDays] = useState(0);
 	if (userFoodError) return <h1>{userFoodError}</h1>;
 	if (userFoodLoading) return <h1>Loading list of foods...</h1>;
 
@@ -146,13 +150,17 @@ export default function DisplayFoods() {
 	const minusDay = () => {
 		var days = parseInt(document.getElementById("daysInput").value)
 		if(days > 0){
-			document.getElementById("daysInput").value = days - 1
+			setChangeDays((currDay) => {
+				return currDay - 1
+			})
 		}
 	}
 	const plusDay = () => {
 		var days = parseInt(document.getElementById("daysInput").value)
 		if(days < 100){
-			document.getElementById("daysInput").value = days+1
+			setChangeDays((currDay) => {
+				return currDay + 1
+			})
 		}
 	}
 
@@ -181,7 +189,9 @@ export default function DisplayFoods() {
 						</Modal.Header>
 						<Modal.Body>
 							<h3>Tips for Storage</h3>
-							<p>{foodInfo[currFoodItem[1]["Name"]]["Tips"]}</p>
+							{foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
+								return (<p>- {tip}</p>)
+							})}
 							<form>
 								<label>
 									Edit Days
@@ -191,7 +201,7 @@ export default function DisplayFoods() {
 												<MinusOutlined style={{paddingBottom:"5px"}} />
 											</button>
 										</span>
-										<input id="daysInput" type="number" name="days" class="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"]))} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<input id="daysInput" type="number" name="days" class="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}}></input>
 										<span class="input-group-btn">
 											<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
 												<PlusOutlined style={{paddingBottom:"5px"}}/>
@@ -203,8 +213,11 @@ export default function DisplayFoods() {
 							</form>
 						</Modal.Body>
 						<Modal.Footer>
-						<Button variant="secondary" onClick={handleClose}>
-							Close
+						<Button variant="secondary" onClick={() => {
+							handleClose()
+							setData(`/UserFood/${userID}/${currFoodItem[0]/"TimeAdded"}`, null)
+						}}>
+							Save
 						</Button>
 						<Button variant="primary" onClick={() => {
 							handleClose()
