@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 import {Modal, Button} from "react-bootstrap"
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons'
 
 import {
 	SwipeableList,
@@ -169,9 +169,19 @@ export default function DisplayFoods() {
 							<form>
 								<label>
 									Edit Days
-									<input type="number" name="days" min="0" value=
-										{calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])}
-									/>
+									<div class="input-group">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="days">
+												<MinusOutlined style={{paddingBottom:"5px"}}/>
+											</button>
+										</span>
+										<input type="text" name="days" class="form-control input-number" value={calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="days">
+												<PlusOutlined style={{paddingBottom:"5px"}}/>
+											</button>
+										</span>
+									</div>
 								</label>
 								{/* <input type="submit" value="Submit" /> */}
 							</form>
