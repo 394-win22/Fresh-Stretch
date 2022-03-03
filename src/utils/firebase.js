@@ -6,15 +6,12 @@ import { useState, useEffect } from "react";
 import {
 	getAuth,
 	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	onIdTokenChanged,
 	signInWithPopup,
 	signOut,
 } from "firebase/auth";
 
-// user id temporary
-export const userID = "50ea90df-2a1f-4dfe-b768-c1eb730ed531";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -32,7 +29,6 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 export const storage = getStorage(app);
 
-export const userId = "C0XdX2OmOQZKzVknueo4xGtsgvI2";
 
 export const deleteData = (path) => {
 	set(ref(database, path), null);
@@ -88,8 +84,31 @@ export const getClothingItem = (type, userID, clothingID) => {
 	return `/${type}/${userID}/${clothingID}`;
 };
 
-export const signInWithGoogle = () => {
-	signInWithPopup(getAuth(app), new GoogleAuthProvider());
+export const signInWithGoogle = (navigate) => {
+	signInWithPopup(getAuth(app), new GoogleAuthProvider())
+	.then((result) => {
+		// This gives you a Google Access Token. You can use it to access the Google API.
+		const credential = GoogleAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+		sessionStorage.setItem(
+			"Auth Token",
+			token
+		);
+		// The signed-in user info.
+		// const user = result.user;
+		navigate('/')
+	  }).catch((error) => {
+		// Handle Errors here.
+		const errorCode = error.code;
+		const errorMessage = error.message;
+		// The email of the user's account used.
+		const email = error.email;
+		// The AuthCredential type that was used.
+		// const credential = GoogleAuthProvider.credentialFromError(error);
+		console.log(errorCode, errorMessage, email);
+		return false;
+	  });
+
 };
 
 const firebaseSignOut = () => signOut(getAuth(app));

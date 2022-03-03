@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import {Modal, Button} from "react-bootstrap"
 import { DeleteOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons'
 
@@ -8,16 +8,18 @@ import {
 	SwipeAction,
 	TrailingActions,
 	Type as ListType,
-  } from 'react-swipeable-list';
-  import 'react-swipeable-list/dist/styles.css';
+} from 'react-swipeable-list';
+import 'react-swipeable-list/dist/styles.css';
+import AddFood from "../components/addFood.js";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useData, setData } from "../utils/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import "./FoodsList.css";
 
-import { userID, useData, setData } from "../utils/firebase";
-
-import "./FoodsPage.css";
 
 const CalculateExpiration = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
@@ -74,37 +76,9 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 
 	return dif;
 };
-
-
-// const leadingActions = () => (
-// 	<LeadingActions>
-// 	  <SwipeAction onClick={() => console.info('leading swipe action triggered')}>
-// 		Action name
-// 	  </SwipeAction>
-// 	</LeadingActions>
-//   );
-  
-  const trailingActions = (item) => (
-	<TrailingActions>
-	  <SwipeAction
-		destructive={true}
-		onClick={() => setData(`/UserFood/${userID}/${item}`, null)}
-	  >
-		<div className="actionContent">
-			<div className="itemColumnCentered">
-				<span className="icon">
-					<DeleteOutlined style={{ fontSize: '300%'}}/>
-					Delete
-				</span>
-			</div>
-				
-		</div>
-	  </SwipeAction>
-	</TrailingActions>
-  );
   
 
-export default function DisplayFoods() {
+export default function DisplayFoods({ StorageLocation }) {
 	const [showModal, setShowModal] = useState(false);
 
   	const handleClose = () => setShowModal(false);
@@ -112,10 +86,46 @@ export default function DisplayFoods() {
 	const handleSave = () => {
 		setShowModal(false)
 	}
+	const auth = getAuth();
+	let [uid, setUID] = useState(null);
+	let navigate = useNavigate();
+	useEffect(() => {
+		let authToken = sessionStorage.getItem('Auth Token')
 
+		if (!authToken) {
+			navigate('/login')
+		}
+	}, [navigate])
+	onAuthStateChanged(auth, (authuser) => {
+		if (authuser) {
+		  	// The user's ID, unique to the Firebase project. Do NOT use
+        	// this value to authenticate with the backend server
+        	// Use User.getToken() instead.
+        	setUID(authuser.uid);
+		}
+	  });
 	const [userFood, userFoodLoading, userFoodError] = useData(
-		`/UserFood/${userID}`
+		`/${StorageLocation}/${uid}`
 	);
+
+	const trailingActions = (item, uid) => (
+		<TrailingActions>
+		  <SwipeAction
+			destructive={true}
+			onClick={() => setData(`/${StorageLocation}/${uid}/${item}`, null)}
+		  >
+			<div className="actionContent">
+				<div className="itemColumnCentered">
+					<span className="icon">
+						<DeleteOutlined style={{ fontSize: '300%'}}/>
+						Delete
+					</span>
+				</div>
+					
+			</div>
+		  </SwipeAction>
+		</TrailingActions>
+	  );
 
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
 	const [currFoodItem, setCurrFoodItem] = useState();
@@ -125,10 +135,14 @@ export default function DisplayFoods() {
 
 	if (!userFood) {
 		return (
-			<div style={{ marginTop: "50%", textAlign: "center" }}>
-				<p>Your fridge is empty.</p>
-				<p>Click on the + icon to add some items.</p>
-			</div>
+			
+			<Container style={{height:"80vh", width:"100vw"}} className="d-flex justify-content-center">
+				<Row className="justify-content-center align-self-center text-center">
+							<AddFood StorageLocation={StorageLocation} />
+							<p className="mt-2">Your {StorageLocation.toLowerCase()} is empty.
+							<br/>Click on the + icon to add some items.</p>
+				</Row>
+			</Container>
 		);
 	}
 
@@ -217,7 +231,7 @@ export default function DisplayFoods() {
 						<Modal.Footer style={{display:"flex", justifyContent:"space-between"}}>
 						<Button variant="danger" onClick={() => {
 							handleClose()
-							setData(`/UserFood/${userID}/${currFoodItem[0]}`, null)
+							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}`, null)
 						}}>
 							Delete Item
 						</Button>
@@ -228,7 +242,7 @@ export default function DisplayFoods() {
 							var newTime = oldTime + delta
 							console.log(oldTime)
 							console.log(newTime)
-							setData(`/UserFood/${userID}/${currFoodItem[0]}/TimeAdded`, newTime)
+							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}/TimeAdded`, newTime)
 						}}>
 							Save
 						</Button>
@@ -236,43 +250,52 @@ export default function DisplayFoods() {
 					</Modal>
 				}
 				<Row id="header" className="py-3">
-					<Col></Col>
+					<Col><AddFood padding-left="5em" StorageLocation={StorageLocation} /></Col>
 					<Col>Food Item</Col>
 					<Col>Use Within</Col>
 				</Row>
+					<SwipeableList
+					fullSwipe={true}
+					type={ListType.IOS}>
 						{Object.entries(userFood)
 							.sort(compareItems)
 							.map((item) => {
 								return (
-									<div className="itemContent" onClick={()=>{
-										setCurrFoodItem(item)
-										setChangeDays(0)
-										handleShow()
-									}}>
-											<div className="itemColumn">
-												<object
-													data={
-														foodInfo[item[1]["Name"]][
-															"Icon"
-														]
-													}
-													width="75"
-													height="75"
-													aria-label="food-icon"
-												/>
+										<SwipeableListItem
+											trailingActions={trailingActions(item[0],uid)}
+											key={item[0]}
+										>
+											<div className="itemContent" onClick={()=>{
+												setCurrFoodItem(item)
+												setChangeDays(0)
+												handleShow()
+											}}>
+													<div className="itemColumn">
+														<object
+															data={
+																foodInfo[item[1]["Name"]][
+																	"Icon"
+																]
+															}
+															width="75"
+															height="75"
+															aria-label="food-icon"
+														/>
+													</div>
+													<div className="itemColumn">{item[1]["Name"]}</div>
+													<div className="itemColumn">
+														{CalculateExpiration(
+															item[1]["TimeAdded"],
+															foodInfo[item[1]["Name"]][
+																"ShelfLife"
+															]
+														)}
+													</div>
 											</div>
-											<div className="itemColumn">{item[1]["Name"]}</div>
-											<div className="itemColumn">
-												{CalculateExpiration(
-													item[1]["TimeAdded"],
-													foodInfo[item[1]["Name"]][
-														"ShelfLife"
-													]
-												)}
-											</div>
-									</div>
+									</SwipeableListItem>
 								);
 							})}
+					</SwipeableList>
 			</Container>
 		</>
 	);

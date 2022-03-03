@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Fresh Stretch 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An app to track expiration dates of food items in your kitchen, also includes tips on how to prolong shelf life and alerts for when things expire
 
 ## Available Scripts
 

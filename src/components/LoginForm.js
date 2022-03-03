@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './LoginForm.css';
 import { signInWithEmailAndPassWD, signInWithGoogle } from '../utils/firebase';
+import { useNavigate } from "react-router-dom";
 
-const Form = () => {    
+const Form = () => {   
+    let navigate = useNavigate(); 
     const [inputs, setinputs] = useState({
         email: "",
         password: ""
@@ -19,7 +21,7 @@ const Form = () => {
     const inputEvent = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        if (name == "email") {
+        if (name === "email") {
             if (value.length > 0) {
                 setdanger(true);
             }
@@ -44,10 +46,10 @@ const Form = () => {
         e.preventDefault();
         setwarnemail(false);
         setwarnpass(false);
-        if (inputs.password == "") {
+        if (inputs.password === "") {
             setwarnpass(true);
         }
-        if (inputs.email == "") {
+        if (inputs.email === "") {
             setwarnemail(true);
         } else if (!validateEmail(inputs.email)) {
             setwarnemail(true);
@@ -58,7 +60,7 @@ const Form = () => {
     };
 
     const Eye = () => {
-        if (pass == "password") {
+        if (pass === "password") {
             setpass("text");
             seteye(false);
         } else {
@@ -73,24 +75,23 @@ const Form = () => {
                 <div className="card-login">
                     <div className="form-login">
                         <div className="left-side">
-                            <img src="https://image.s5a.com/is/image/saks/010422_WMHP_3UP_1_NEWYEARNEWJEANSRESOLUTION?scl=1&qlt=84&fmt=jpg" />
+                            <img src="https://i.pinimg.com/originals/ec/44/43/ec444365208e7c8695734dec1ae6abb7.jpg" alt="Oranges on trees"/>
                         </div>
     
                         <div className="right-side">
-                            <div className="register">
+                            {/* <div className="register">
                                 <p>Not a member? <a href="#">Register Now</a></p>
+                            </div> */}
+
+                            <div className="logo-login">
+                                <object data="Logo1.svg" width="240" height="125" text-align="center" aria-label="Logo"></object>
                             </div>
-    
-                            <div className="hello">
-                                <h2>Welcome to SET!</h2>
-                                <h4>Set your cloSET</h4>
-                            </div>
-    
+
                             <form onSubmit={submitForm}>
     
-                                <div className="input_text">
-                                    <input className={` ${warnemail ? "warning" : "" }`} type="text" pattern="[^\s]+" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
-                                    <p className={` ${danger ? "danger" : "" }`}><i className="fa fa-warning"></i>Please enter a valid email address.</p>
+                                <div className="input_text" >
+                                    <input data-cy="email" className={` ${warnemail ? "warning" : "" }`} type="text" pattern="[^\s]+" placeholder="Enter Email" name="email" value={inputs.email} onChange={inputEvent} />
+                                    <p data-cy="emailwarn"className={` ${danger ? "danger" : "" }`} ><i className="fa fa-warning"></i>Please enter a valid email address.</p>
                                 </div>
                                 <div className="input_text">
                                     <input className={` ${warnpass ? "warning" : "" }`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
@@ -100,13 +101,13 @@ const Form = () => {
                                     <p>Forget Password</p>
                                 </div>
                                 <div className="btn-login">
-                                    <button type="submit">Sign in</button>
+                                    <button data-cy="signinbutton" type="submit">Sign in</button>
                                 </div>
 
                             </form>
                             <hr />
                             <div className="boxes-login">
-                                <span onClick={() => signInWithGoogle()}><img src="https://imgur.com/XnY9cKl.png" /></span>
+                                <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" alt="Google Logo" /></span>
                                 {/* <span><img src="https://imgur.com/ODlSChL.png" /></span>
                                 <span><img src="https://imgur.com/mPBRdQt.png" /></span> */}
                             </div>

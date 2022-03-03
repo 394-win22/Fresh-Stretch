@@ -10,7 +10,7 @@
     align-items: center;
     width: 100%;
     min-height: 100vh;
-    background-color: #f7ebda
+    background-color: #a47c66;
 }
 
 .container-login .card-login {
@@ -48,7 +48,7 @@
 
 .container-login .card-login .right-side {
     width: 50%;
-    background-color: #efecf2;
+    background-color: #e1ddd3;
     height: 100%;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
@@ -65,7 +65,7 @@
 
 .register p {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     font-size: 13px;
     font-weight: 600;
     color: #2a2739
@@ -73,15 +73,21 @@
 
 .register p a {
     text-decoration: none;
-    color: blue;
+    color: #ff914d;
     margin-left: 3px
 }
 
 .hello {
-    font-family: 'Prata', serif;
+    font-family: 'Arial';
     margin-top: 40px;
     text-align: center;
     color: #2a2739
+}
+
+.logo-login {
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .hello h4 {
@@ -162,7 +168,7 @@ input[type="password"] {
     width: 100%;
     border: none;
     outline: 0;
-    background-color: #2646a8;
+    background-color: #ff914d;
     border-radius: 10px;
     transition: all 0.5s;
     cursor: pointer;
@@ -171,7 +177,7 @@ input[type="password"] {
 }
 
 .btn-login button:hover {
-    background-color: #1c3580
+    background-color: #ff914d;
 }
 
 .right-side hr {
