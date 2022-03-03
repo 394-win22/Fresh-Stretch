@@ -188,9 +188,9 @@ export default function DisplayFoods() {
 						</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<h3>Tips for Storage</h3>
-							{foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
-								return (<p>- {tip}</p>)
+							
+							{foodInfo[currFoodItem[1]["Name"]]["Tips"] && foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
+								return (<><h3>Tips for Storage</h3><p>- {tip}</p></>)
 							})}
 							<form>
 								<label>
@@ -215,8 +215,12 @@ export default function DisplayFoods() {
 						<Modal.Footer>
 						<Button variant="secondary" onClick={() => {
 							handleClose()
-							
-							setData(`/UserFood/${userID}/${currFoodItem[0]/"TimeAdded"}`, null)
+							var oldTime = currFoodItem[1]["TimeAdded"]
+							var delta = changeDays * 86400000
+							var newTime = oldTime + delta
+							console.log(oldTime)
+							console.log(newTime)
+							setData(`/UserFood/${userID}/${currFoodItem[0]}/TimeAdded`, newTime)
 						}}>
 							Save
 						</Button>
@@ -240,6 +244,7 @@ export default function DisplayFoods() {
 								return (
 									<div className="itemContent" onClick={()=>{
 										setCurrFoodItem(item)
+										setChangeDays(0)
 										handleShow()
 									}}>
 											<div className="itemColumn">
