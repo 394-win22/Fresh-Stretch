@@ -189,31 +189,39 @@ export default function DisplayFoods() {
 						</Modal.Header>
 						<Modal.Body>
 							
-							{foodInfo[currFoodItem[1]["Name"]]["Tips"] && foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
-								return (<><h3>Tips for Storage</h3><p>- {tip}</p></>)
-							})}
+							{foodInfo[currFoodItem[1]["Name"]]["Tips"] && (
+								<><h3>Tips for Storage</h3>
+									{foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
+									return (<><p>- {tip}</p></>)
+									})}
+								</>)}
 							<form>
 								<label>
-									Edit Days
-									<div class="input-group">
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
+									<h3>Edit Days</h3>
+									<div className="input-group">
+										<span className="input-group-btn">
+											<button type="button" className="btn btn-danger btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
 												<MinusOutlined style={{paddingBottom:"5px"}} />
 											</button>
 										</span>
-										<input id="daysInput" type="number" name="days" class="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}}></input>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
+										<input id="daysInput" type="number" name="days" className="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<span className="input-group-btn">
+											<button type="button" className="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
 												<PlusOutlined style={{paddingBottom:"5px"}}/>
 											</button>
 										</span>
 									</div>
 								</label>
-								{/* <input type="submit" value="Submit" /> */}
 							</form>
 						</Modal.Body>
-						<Modal.Footer>
-						<Button variant="secondary" onClick={() => {
+						<Modal.Footer style={{display:"flex", justifyContent:"space-between"}}>
+						<Button variant="danger" onClick={() => {
+							handleClose()
+							setData(`/UserFood/${userID}/${currFoodItem[0]}`, null)
+						}}>
+							Delete Item
+						</Button>
+						<Button variant="success" onClick={() => {
 							handleClose()
 							var oldTime = currFoodItem[1]["TimeAdded"]
 							var delta = changeDays * 86400000
@@ -223,12 +231,6 @@ export default function DisplayFoods() {
 							setData(`/UserFood/${userID}/${currFoodItem[0]}/TimeAdded`, newTime)
 						}}>
 							Save
-						</Button>
-						<Button variant="primary" onClick={() => {
-							handleClose()
-							setData(`/UserFood/${userID}/${currFoodItem[0]}`, null)
-						}}>
-							Delete Item
 						</Button>
 						</Modal.Footer>
 					</Modal>
