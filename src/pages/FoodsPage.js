@@ -150,17 +150,20 @@ export default function DisplayFoods() {
 					<Modal show={showModal} onHide={handleClose}>
 						<Modal.Header closeButton>
 						<Modal.Title>
+							<div style={{display:"flex"}}>
 							<object
 								data={
 									foodInfo[currFoodItem[1]["Name"]][
 										"Icon"
 									]
 								}
-								width="30"
-								height="30"
+								width="35"
+								height="35"
 								aria-label="food-icon"
+								style={{paddingRight:"10px", paddingBottom:"3px"}}
 							/>
 							<p>{currFoodItem[1]["Name"]}</p>
+							</div>
 						</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
