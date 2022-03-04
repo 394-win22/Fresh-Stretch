@@ -1,12 +1,14 @@
-import React from "react";
-import { DeleteOutlined } from '@ant-design/icons'
+import {React, useState, useEffect} from "react";
+import {Modal, Button} from "react-bootstrap"
+import { DeleteOutlined, PlusOutlined, MinusOutlined} from '@ant-design/icons'
+
 import {
 	SwipeableList,
 	SwipeableListItem,
 	SwipeAction,
 	TrailingActions,
 	Type as ListType,
-  } from 'react-swipeable-list';
+} from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 import AddFood from "../components/addFood.js";
 
@@ -15,7 +17,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useData, setData } from "../utils/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./FoodsList.css";
 
@@ -54,6 +55,18 @@ const CalculateExpiration = (timeAdded, shelfLife) => {
 	}
 };
 
+const calcDays = (timeAdded, shelfLife) => {
+	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
+	const expDate = new Date(timeAdded + shelfLife);
+
+	const today = Date.now();
+	const dif = expDate - today;
+
+	const day = 1000 * 60 * 60 * 24;
+	
+	return Math.floor(dif / day);
+};
+
 const CalculateExpirationAbs = (timeAdded, shelfLife) => {
 	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
 	const expDate = new Date(timeAdded + shelfLife);
@@ -66,6 +79,13 @@ const CalculateExpirationAbs = (timeAdded, shelfLife) => {
   
 
 export default function DisplayFoods({ StorageLocation }) {
+	const [showModal, setShowModal] = useState(false);
+
+  	const handleClose = () => setShowModal(false);
+  	const handleShow = () => setShowModal(true);
+	const handleSave = () => {
+		setShowModal(false)
+	}
 	const auth = getAuth();
 	let [uid, setUID] = useState(null);
 	let navigate = useNavigate();
@@ -107,17 +127,9 @@ export default function DisplayFoods({ StorageLocation }) {
 		</TrailingActions>
 	  );
 
-	// const handleOnClick = id => () => {
-	// 	console.log('[handle on click]', id);
-	//   };
-
-	// const handleDelete = (itemID) => {
-	// 	console.log("Delete item");
-	// 	// setData(`/${StorageLocation}/${userID}/${itemID}`, null);
-	// };
-
 	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
-
+	const [currFoodItem, setCurrFoodItem] = useState();
+	const [changeDays, setChangeDays] = useState(0);
 	if (userFoodError) return <h1>{userFoodError}</h1>;
 	if (userFoodLoading) return <h1>Loading list of foods...</h1>;
 
@@ -149,9 +161,94 @@ export default function DisplayFoods({ StorageLocation }) {
 		return x < y ? -1 : x > y ? 1 : 0;
 	};
 
+	const minusDay = () => {
+		var days = parseInt(document.getElementById("daysInput").value)
+		if(days > 0){
+			setChangeDays((currDay) => {
+				return currDay - 1
+			})
+		}
+	}
+	const plusDay = () => {
+		var days = parseInt(document.getElementById("daysInput").value)
+		if(days < 100){
+			setChangeDays((currDay) => {
+				return currDay + 1
+			})
+		}
+	}
+
 	return (
 		<>
 			<Container>
+				{currFoodItem &&
+					<Modal show={showModal} onHide={handleClose}>
+						<Modal.Header closeButton>
+						<Modal.Title>
+							<div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+							<object
+								data={
+									foodInfo[currFoodItem[1]["Name"]][
+										"Icon"
+									]
+								}
+								width="35"
+								height="35"
+								aria-label="food-icon"
+								style={{paddingRight:"10px", paddingBottom:"3px"}}
+							/>
+							<p>{currFoodItem[1]["Name"]}</p>
+							</div>
+						</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							
+							{foodInfo[currFoodItem[1]["Name"]]["Tips"] && (
+								<><h3>Tips for Storage</h3>
+									{foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
+									return (<><p>- {tip}</p></>)
+									})}
+								</>)}
+							<form>
+								<label>
+									<h3>Edit Days</h3>
+									<div className="input-group">
+										<span className="input-group-btn">
+											<button type="button" className="btn btn-danger btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
+												<MinusOutlined style={{paddingBottom:"5px"}} />
+											</button>
+										</span>
+										<input id="daysInput" type="number" name="days" className="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<span className="input-group-btn">
+											<button type="button" className="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
+												<PlusOutlined style={{paddingBottom:"5px"}}/>
+											</button>
+										</span>
+									</div>
+								</label>
+							</form>
+						</Modal.Body>
+						<Modal.Footer style={{display:"flex", justifyContent:"space-between"}}>
+						<Button variant="danger" onClick={() => {
+							handleClose()
+							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}`, null)
+						}}>
+							Delete Item
+						</Button>
+						<Button variant="success" onClick={() => {
+							handleClose()
+							var oldTime = currFoodItem[1]["TimeAdded"]
+							var delta = changeDays * 86400000
+							var newTime = oldTime + delta
+							console.log(oldTime)
+							console.log(newTime)
+							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}/TimeAdded`, newTime)
+						}}>
+							Save
+						</Button>
+						</Modal.Footer>
+					</Modal>
+				}
 				<Row id="header" className="py-3">
 					<Col><AddFood padding-left="5em" StorageLocation={StorageLocation} /></Col>
 					<Col>Food Item</Col>
@@ -168,7 +265,11 @@ export default function DisplayFoods({ StorageLocation }) {
 											trailingActions={trailingActions(item[0],uid)}
 											key={item[0]}
 										>
-											<div className="itemContent">
+											<div className="itemContent" onClick={()=>{
+												setCurrFoodItem(item)
+												setChangeDays(0)
+												handleShow()
+											}}>
 													<div className="itemColumn">
 														<object
 															data={
@@ -191,7 +292,7 @@ export default function DisplayFoods({ StorageLocation }) {
 														)}
 													</div>
 											</div>
-										</SwipeableListItem>
+									</SwipeableListItem>
 								);
 							})}
 					</SwipeableList>
