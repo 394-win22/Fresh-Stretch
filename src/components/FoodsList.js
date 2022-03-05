@@ -218,7 +218,7 @@ export default function DisplayFoods({ StorageLocation }) {
 												<MinusOutlined style={{paddingBottom:"5px"}} />
 											</button>
 										</span>
-										<input id="daysInput" type="number" name="days" className="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}}></input>
+										<input id="daysInput" type="number" name="days" className="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}} readOnly></input>
 										<span className="input-group-btn">
 											<button type="button" className="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
 												<PlusOutlined style={{paddingBottom:"5px"}}/>
@@ -240,8 +240,6 @@ export default function DisplayFoods({ StorageLocation }) {
 							var oldTime = currFoodItem[1]["TimeAdded"]
 							var delta = changeDays * 86400000
 							var newTime = oldTime + delta
-							console.log(oldTime)
-							console.log(newTime)
 							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}/TimeAdded`, newTime)
 						}}>
 							Save
