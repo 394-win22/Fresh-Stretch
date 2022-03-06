@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Checkbox from "@mui/material/Checkbox";
 import Avatar from "@mui/material/Avatar";
-
+import Form from 'react-bootstrap/Form'
 
 import { PlusSquareFill } from "react-bootstrap-icons";
 
@@ -141,16 +141,23 @@ const AddFood = ({StorageLocation}) => {
 								setChecked={setChecked}
 							/>
 						</Row>
-					</Container>
-					<p>Add Other Food Item</p>
-					<form action="/action_page.php">
+						<p>Other:</p>
+						<Form>
+						<Form.Group className="mb-3" controlId="formBasicEmail" >
+							<Form.Label>Food Name</Form.Label>
+							<Form.Control type="text" style={{borderColor:"darkGrey"}} />
+							<Form.Text className="text-muted">
+							</Form.Text>
+						</Form.Group>
+
+						<Form.Group className="mb-3" controlId="formBasicPassword">
+							<Form.Label>Expiration Days</Form.Label>
+							<Form.Control type="text" style={{borderColor:"darkGrey"}}/>
+						</Form.Group>
 						
-						<label for="fname">First name:</label>
-						<input type="text" id="fname" name="fname"/><br></br>
-						<label for="lname">Last name:</label>
-						<input type="text" id="lname" name="lname"/><br></br>
-						<input type="submit" value="Submit"/>
-					</form>
+					</Form>
+					</Container>
+					
 					
 				</DialogContent>
 				<DialogActions>
