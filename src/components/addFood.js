@@ -19,7 +19,7 @@ import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
+function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked }) {
 	foodInfo = Object.entries(foodInfo);
 
 	const handleToggle = (value) => () => {
@@ -31,9 +31,21 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 		} else {
 			newChecked.splice(currentIndex, 1);
 		}
-
 		setChecked(newChecked);
 	};
+	const handleOtherToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [...checked];
+
+		if (currentIndex === -1) {
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
+		setChecked(newChecked);
+		setOtherChecked(checked.indexOf(value))
+	}
+	let numFoods = 0
 	console.log(foodInfo);
 	console.log("CHECKED", checked);
 	return (
@@ -42,6 +54,7 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 			sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
 		>
 			{Object.entries(foodInfo).map((value) => {
+				numFoods += 1
 				const labelId = `checkbox-list-secondary-label-${value}`;
 				return (
 					<ListItem
@@ -68,6 +81,28 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 					</ListItem>
 				);
 			})}
+			<ListItem
+						key={numFoods + 1}
+						secondaryAction={
+							<Checkbox
+								edge="end"
+								onChange={handleOtherToggle((numFoods+1).toString())}
+								checked={checked.indexOf(numFoods+1) !== -1}
+								inputProps={{ "aria-labelledby": `checkbox-list-secondary-label-${numFoods+1}` }}
+							/>
+						}
+						disablePadding
+					>
+						<ListItemButton>
+							<ListItemAvatar>
+								<Avatar>O</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								id={numFoods+1}
+								primary="Other"
+							/>
+						</ListItemButton>
+			</ListItem>
 		</List>
 	);
 }
@@ -110,6 +145,7 @@ const AddFood = ({StorageLocation}) => {
 	const [open, setOpen] = React.useState(false);
 
 	const [checked, setChecked] = React.useState([]);
+	const [otherChecked, setOtherChecked] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -139,23 +175,25 @@ const AddFood = ({StorageLocation}) => {
 								foodInfo={foodInfo}
 								checked={checked}
 								setChecked={setChecked}
+								setOtherChecked={setOtherChecked}
 							/>
 						</Row>
-						<p>Other:</p>
-						<Form>
-						<Form.Group className="mb-3" controlId="formBasicEmail" >
-							<Form.Label>Food Name</Form.Label>
-							<Form.Control type="text" style={{borderColor:"darkGrey"}} />
-							<Form.Text className="text-muted">
-							</Form.Text>
-						</Form.Group>
+						{otherChecked &&
+							<Form>
+								<Form.Group className="mb-3" controlId="formBasicEmail" >
+									<Form.Label>Food Name</Form.Label>
+									<Form.Control type="text" style={{borderColor:"darkGrey"}} />
+									<Form.Text className="text-muted">
+									</Form.Text>
+								</Form.Group>
 
-						<Form.Group className="mb-3" controlId="formBasicPassword">
-							<Form.Label>Expiration Days</Form.Label>
-							<Form.Control type="text" style={{borderColor:"darkGrey"}}/>
-						</Form.Group>
+								<Form.Group className="mb-3" controlId="formBasicPassword">
+									<Form.Label>Expiration Days</Form.Label>
+									<Form.Control type="text" style={{borderColor:"darkGrey"}}/>
+								</Form.Group>
+							</Form>
+						}
 						
-					</Form>
 					</Container>
 					
 					
