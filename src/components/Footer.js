@@ -17,6 +17,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const tabs = [
 	{
+		route: "/pantry",
+		icon: Inventory,
+		label: "Pantry",
+	}, 
+	{
 		route: "/",
 		icon: Kitchen,
 		label: "Fridge",
@@ -25,11 +30,6 @@ const tabs = [
 		route: "/freezer",
 		icon: AcUnit,
 		label: "Freezer",
-	}, 
-	{
-		route: "/pantry",
-		icon: Inventory,
-		label: "Pantry",
 	}, 
 	{
 		route: "/user",

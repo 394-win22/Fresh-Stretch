@@ -154,6 +154,7 @@ const AddFood = ({StorageLocation}) => {
 									);
 									setOpen(false);
 								}}
+								style={{backgroundColor:"#FF914D",borderColor:"#FF914D"}}
 							>
 								Confirm
 					</Button>

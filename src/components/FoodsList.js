@@ -205,22 +205,24 @@ export default function DisplayFoods({ StorageLocation }) {
 							
 							{foodInfo[currFoodItem[1]["Name"]]["Tips"] && (
 								<><h3>Tips for Storage</h3>
+									<ul>
 									{foodInfo[currFoodItem[1]["Name"]]["Tips"].map((tip)=>{
-									return (<><p>- {tip}</p></>)
+									return (<><li> {tip}</li></>)
 									})}
+									</ul>
 								</>)}
 							<form>
 								<label>
 									<h3>Edit Days</h3>
 									<div className="input-group">
 										<span className="input-group-btn">
-											<button type="button" className="btn btn-danger btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
+											<button type="button" className="btn btn-secondary btn-number"  data-type="minus" data-field="days" onClick={() => minusDay()}>
 												<MinusOutlined style={{paddingBottom:"5px"}} />
 											</button>
 										</span>
 										<input id="daysInput" type="number" name="days" className="form-control input-number" value={parseInt(calcDays(currFoodItem[1]["TimeAdded"],foodInfo[currFoodItem[1]["Name"]]["ShelfLife"])) + changeDays} min="0" max="100" style={{fontSize:"12pt"}} readOnly></input>
 										<span className="input-group-btn">
-											<button type="button" className="btn btn-success btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
+											<button type="button" className="btn btn-secondary btn-number" data-type="plus" data-field="days" onClick={()=>plusDay()}>
 												<PlusOutlined style={{paddingBottom:"5px"}}/>
 											</button>
 										</span>
@@ -229,13 +231,13 @@ export default function DisplayFoods({ StorageLocation }) {
 							</form>
 						</Modal.Body>
 						<Modal.Footer style={{display:"flex", justifyContent:"space-between"}}>
-						<Button variant="danger" onClick={() => {
+						<Button variant="secondary" onClick={() => {
 							handleClose()
 							setData(`/${StorageLocation}/${uid}/${currFoodItem[0]}`, null)
 						}}>
 							Delete Item
 						</Button>
-						<Button variant="success" onClick={() => {
+						<Button style={{backgroundColor:"#80B470", borderColor:"#80B470"}} onClick={() => {
 							handleClose()
 							var oldTime = currFoodItem[1]["TimeAdded"]
 							var delta = changeDays * 86400000
