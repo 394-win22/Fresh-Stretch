@@ -32,6 +32,9 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 			newChecked.splice(currentIndex, 1);
 		}
 		setChecked(newChecked);
+		if (currentIndex == numFoods+1){
+			console.log("other is checked")
+		}
 	};
 	const handleOtherToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
@@ -43,10 +46,10 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 			newChecked.splice(currentIndex, 1);
 		}
 		setChecked(newChecked);
-		setOtherChecked(checked.indexOf(value))
+		setOtherChecked(checked.indexOf(value));
 	}
 	let numFoods = 0
-	console.log(foodInfo);
+
 	console.log("CHECKED", checked);
 	return (
 		<List
@@ -86,7 +89,7 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 						secondaryAction={
 							<Checkbox
 								edge="end"
-								onChange={handleOtherToggle((numFoods+1).toString())}
+								onChange={handleToggle((numFoods+1).toString())}
 								checked={checked.indexOf(numFoods+1) !== -1}
 								inputProps={{ "aria-labelledby": `checkbox-list-secondary-label-${numFoods+1}` }}
 							/>
@@ -175,10 +178,10 @@ const AddFood = ({StorageLocation}) => {
 								foodInfo={foodInfo}
 								checked={checked}
 								setChecked={setChecked}
-								setOtherChecked={setOtherChecked}
+								// setOtherChecked={setOtherChecked}
 							/>
 						</Row>
-						{otherChecked &&
+						
 							<Form>
 								<Form.Group className="mb-3" controlId="formBasicEmail" >
 									<Form.Label>Food Name</Form.Label>
@@ -192,8 +195,7 @@ const AddFood = ({StorageLocation}) => {
 									<Form.Control type="text" style={{borderColor:"darkGrey"}}/>
 								</Form.Group>
 							</Form>
-						}
-						
+											
 					</Container>
 					
 					
