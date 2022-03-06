@@ -19,15 +19,17 @@ import {useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked }) {
+function CheckboxListSecondary({ foodInfo, checked, setChecked }) {
 	foodInfo = Object.entries(foodInfo);
 
 	const handleToggle = (value) => () => {
+		
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
 
 		if (currentIndex === -1) {
 			newChecked.push(value);
+			console.log("index", checked)
 		} else {
 			newChecked.splice(currentIndex, 1);
 		}
@@ -36,18 +38,18 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 			console.log("other is checked")
 		}
 	};
-	const handleOtherToggle = (value) => () => {
-		const currentIndex = checked.indexOf(value);
-		const newChecked = [...checked];
+	// const handleOtherToggle = (value) => () => {
+	// 	const currentIndex = checked.indexOf(value);
+	// 	const newChecked = [...checked];
 
-		if (currentIndex === -1) {
-			newChecked.push(value);
-		} else {
-			newChecked.splice(currentIndex, 1);
-		}
-		setChecked(newChecked);
-		setOtherChecked(checked.indexOf(value));
-	}
+	// 	if (currentIndex === -1) {
+	// 		newChecked.push(value);
+	// 	} else {
+	// 		newChecked.splice(currentIndex, 1);
+	// 	}
+	// 	setChecked(newChecked);
+	// 	setOtherChecked(checked.indexOf(value));
+	// }
 	let numFoods = 0
 
 	console.log("CHECKED", checked);
@@ -90,6 +92,7 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 							<Checkbox
 								edge="end"
 								onChange={handleToggle((numFoods+1).toString())}
+
 								checked={checked.indexOf(numFoods+1) !== -1}
 								inputProps={{ "aria-labelledby": `checkbox-list-secondary-label-${numFoods+1}` }}
 							/>
@@ -101,7 +104,7 @@ function CheckboxListSecondary({ foodInfo, checked, setChecked, setOtherChecked 
 								<Avatar>O</Avatar>
 							</ListItemAvatar>
 							<ListItemText
-								id={numFoods+1}
+								id={`checkbox-list-secondary-label-${numFoods+1}`}
 								primary="Other"
 							/>
 						</ListItemButton>
@@ -148,7 +151,7 @@ const AddFood = ({StorageLocation}) => {
 	const [open, setOpen] = React.useState(false);
 
 	const [checked, setChecked] = React.useState([]);
-	const [otherChecked, setOtherChecked] = React.useState(false);
+	//const [otherChecked, setOtherChecked] = React.useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -182,7 +185,7 @@ const AddFood = ({StorageLocation}) => {
 							/>
 						</Row>
 						
-							<Form>
+							{/* <Form>
 								<Form.Group className="mb-3" controlId="formBasicEmail" >
 									<Form.Label>Food Name</Form.Label>
 									<Form.Control type="text" style={{borderColor:"darkGrey"}} />
@@ -194,7 +197,7 @@ const AddFood = ({StorageLocation}) => {
 									<Form.Label>Expiration Days</Form.Label>
 									<Form.Control type="text" style={{borderColor:"darkGrey"}}/>
 								</Form.Group>
-							</Form>
+							</Form> */}
 											
 					</Container>
 					
