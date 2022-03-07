@@ -1,0 +1,65 @@
+[debug] [2022-03-07T22:43:35.539Z] ----------------------------------------------------------------------
+[debug] [2022-03-07T22:43:35.541Z] Command:       /usr/local/bin/node /usr/local/bin/firebase emulators:start --import=./saved-data --export-on-exit
+[debug] [2022-03-07T22:43:35.542Z] CLI Version:   10.0.1
+[debug] [2022-03-07T22:43:35.542Z] Platform:      darwin
+[debug] [2022-03-07T22:43:35.542Z] Node Version:  v14.16.0
+[debug] [2022-03-07T22:43:35.543Z] Time:          Mon Mar 07 2022 16:43:35 GMT-0600 (Central Standard Time)
+[debug] [2022-03-07T22:43:35.543Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-03-07T22:43:35.600Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-03-07T22:43:35.600Z] > authorizing via signed-in user (barclaycristina@gmail.com)
+[info] i  emulators: Starting emulators: auth, database, hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, database, hosting"}}
+[debug] [2022-03-07T22:43:35.616Z] [hub] writing locator at /var/folders/hm/v41m7qp945lf5r_64dddh1wh0000gn/T/hub-fresh-stretch.json
+[debug] [2022-03-07T22:43:35.643Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch [none]
+[debug] [2022-03-07T22:43:35.783Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch 200
+[debug] [2022-03-07T22:43:35.784Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch {"projectId":"fresh-stretch","projectNumber":"996857465580","displayName":"fresh-stretch","name":"projects/fresh-stretch","resources":{"hostingSite":"fresh-stretch","realtimeDatabaseInstance":"fresh-stretch-default-rtdb"},"state":"ACTIVE"}
+[debug] [2022-03-07T22:43:35.785Z] database rules config:  []
+[warn] ⚠  database: Did not find a Realtime Database rules file specified in a firebase.json config file. The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"database"},"message":"Did not find a Realtime Database rules file specified in a firebase.json config file. The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
+[debug] [2022-03-07T22:43:35.787Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-03-07T22:43:35.788Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-03-07T22:43:35.788Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
+[debug] [2022-03-07T22:43:35.788Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","/Users/cristinabarclay/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar","--host","localhost","--port",9000],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"/Users/cristinabarclay/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar\",\"--host\",\"localhost\",\"--port\",9000],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\"],\"joinArgs\":false}"}}
+[info] i  database: Database Emulator logging to database-debug.log {"metadata":{"emulator":{"name":"database"},"message":"Database Emulator logging to \u001b[1mdatabase-debug.log\u001b[22m"}}
+[debug] [2022-03-07T22:43:36.968Z] 16:43:36.967 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+ {"metadata":{"emulator":{"name":"database"},"message":"16:43:36.967 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started\n"}}
+[debug] [2022-03-07T22:43:37.129Z] 16:43:37.129 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000
+ {"metadata":{"emulator":{"name":"database"},"message":"16:43:37.129 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000\n"}}
+[info] i  auth: Importing config from /Users/cristinabarclay/Documents/COMP SCI/Fresh-Stretch/saved-data/auth_export/config.json {"metadata":{"emulator":{"name":"database"},"message":"Importing config from /Users/cristinabarclay/Documents/COMP SCI/Fresh-Stretch/saved-data/auth_export/config.json"}}
+[info] i  auth: Importing accounts from /Users/cristinabarclay/Documents/COMP SCI/Fresh-Stretch/saved-data/auth_export/accounts.json {"metadata":{"emulator":{"name":"database"},"message":"Importing accounts from /Users/cristinabarclay/Documents/COMP SCI/Fresh-Stretch/saved-data/auth_export/accounts.json"}}
+[debug] [2022-03-07T22:43:39.969Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/fresh-stretch/sites 
+[debug] [2022-03-07T22:43:40.136Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/fresh-stretch/sites 200
+[debug] [2022-03-07T22:43:40.136Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/fresh-stretch/sites {"sites":[{"name":"projects/996857465580/sites/fresh-stretch","defaultUrl":"https://fresh-stretch.web.app","appId":"1:996857465580:web:edd34e785e920f3cdfb3c9","type":"DEFAULT_SITE"},{"name":"projects/996857465580/sites/fs-app-dev","defaultUrl":"https://fs-app-dev.web.app","type":"USER_SITE"}]}
+[debug] [2022-03-07T22:43:40.137Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch/webApps/1:996857465580:web:edd34e785e920f3cdfb3c9/config [none]
+[debug] [2022-03-07T22:43:40.360Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch/webApps/1:996857465580:web:edd34e785e920f3cdfb3c9/config 200
+[debug] [2022-03-07T22:43:40.360Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/fresh-stretch/webApps/1:996857465580:web:edd34e785e920f3cdfb3c9/config {"projectId":"fresh-stretch","appId":"1:996857465580:web:edd34e785e920f3cdfb3c9","databaseURL":"https://fresh-stretch-default-rtdb.firebaseio.com","storageBucket":"fresh-stretch.appspot.com","apiKey":"AIzaSyCWDZS0FgOqaTOa69nzATeioMRt1zwmAl0","authDomain":"fresh-stretch.firebaseapp.com","messagingSenderId":"996857465580"}
+[info] i  hosting[production]: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] ✔  hosting[production]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting[development]: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] ✔  hosting[development]: Local server: http://localhost:5005 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5005\u001b[22m\u001b[24m"}}
+[debug] [2022-03-07T22:43:40.639Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-03-07T22:43:40.640Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-03-07T22:43:40.640Z] Starting Emulator UI with command {"binary":"node","args":["/Users/cristinabarclay/.cache/firebase/emulators/ui-v1.6.4/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/cristinabarclay/.cache/firebase/emulators/ui-v1.6.4/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2022-03-07T22:43:40.729Z] Web / API server started at localhost:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://localhost:4000                │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI            │
+├────────────────┼────────────────┼────────────────────────────────┤
+│ Authentication │ localhost:9099 │ http://localhost:4000/auth     │
+├────────────────┼────────────────┼────────────────────────────────┤
+│ Database       │ localhost:9000 │ http://localhost:4000/database │
+├────────────────┼────────────────┼────────────────────────────────┤
+│ Hosting        │ localhost:5000 │ n/a                            │
+└────────────────┴────────────────┴────────────────────────────────┘
+  Emulator Hub running at localhost:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[info] i  To reset your email address to test@a.com, follow this link: http://localhost:9099/emulator/action?mode=recoverEmail&lang=en&oobCode=a2AoscWge229naBpUICU0x3lOVEr_sMk8TWPyXrd1RJHAdm5cUVgEP&apiKey=fake-api-key {"metadata":{"emulator":{"name":"auth"},"message":"To reset your email address to test@a.com, follow this link: http://localhost:9099/emulator/action?mode=recoverEmail&lang=en&oobCode=a2AoscWge229naBpUICU0x3lOVEr_sMk8TWPyXrd1RJHAdm5cUVgEP&apiKey=fake-api-key"}}
