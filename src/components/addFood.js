@@ -160,7 +160,7 @@ const AddFood = ({StorageLocation}) => {
 		setOpen(false);
 	};
 
-	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
+	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo/${StorageLocation}/`);
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 

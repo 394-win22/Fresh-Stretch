@@ -127,7 +127,7 @@ export default function DisplayFoods({ StorageLocation }) {
 		</TrailingActions>
 	  );
 
-	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo`);
+	const [foodInfo, foodInfoLoading, foodInfoError] = useData(`/FoodInfo/${StorageLocation}/`);
 	const [currFoodItem, setCurrFoodItem] = useState();
 	const [changeDays, setChangeDays] = useState(0);
 	if (userFoodError) return <h1>{userFoodError}</h1>;
@@ -148,6 +148,8 @@ export default function DisplayFoods({ StorageLocation }) {
 
 	if (foodInfoError) return <h1>{foodInfoError}</h1>;
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
+
+	console.log(foodInfo);
 
 	let compareItems = (item1, item2) => {
 		var x = CalculateExpirationAbs(
