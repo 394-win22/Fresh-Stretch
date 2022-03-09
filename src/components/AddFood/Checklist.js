@@ -10,10 +10,11 @@ const Checklist = ({ foodInfo, checked, setOtherName }) => {
 	foodInfo = Object.entries(foodInfo);
 
 	const handleToggle = (value) => () => {
+		value = String(value);
 		if (!checked.includes(value)) {
 			checked.push(value);
 		} else {
-			checked.splice(value, 1);
+			checked.splice(checked.indexOf(value), 1);
 		}
 	};
 

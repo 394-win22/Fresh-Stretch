@@ -1,13 +1,9 @@
 import { pushData } from "../../utils/firebase";
 
 const SaveFood = async (foodInfo, checked, otherName, uid, StorageLocation) => {
-	console.log(foodInfo);
-
 	for (var i in checked) {
 		var today = new Date();
 		var index = parseInt(checked[i]);
-
-		console.log(index);
 
 		try {
 			await pushData(`/${StorageLocation}/${uid}`, {

@@ -46,7 +46,6 @@ const AddFood = ({ StorageLocation }) => {
 	const handleClose = () => {
 		setChecked([]);
 		setOpen(false);
-		console.log(otherName);
 		setOtherName("");
 	};
 
