@@ -1,2 +1,7 @@
-22:11:22.921 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-22:11:23.071 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
+22:40:35.652 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+22:40:35.829 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9000
+22:56:27.922 [Thread-0] INFO com.firebase.server.forge.App$ - Attempting graceful shutdown.
+22:56:27.932 [NamespaceSystem-akka.actor.default-dispatcher-12] INFO com.firebase.core.namespace.Terminator$Terminator - 1 actors left to terminate: fresh-stretch
+22:56:27.941 [NamespaceSystem-akka.actor.default-dispatcher-12] INFO com.firebase.core.namespace.NamespaceActor - Stopping namespace actor for fresh-stretch
+22:56:27.942 [NamespaceSystem-akka.actor.default-dispatcher-12] INFO com.firebase.core.namespace.NamespaceActor - Gauges removed for fresh-stretch
+22:56:27.946 [Thread-0] INFO com.firebase.server.forge.App$ - Graceful shutdown complete.
