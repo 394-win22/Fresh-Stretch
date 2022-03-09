@@ -55,7 +55,7 @@ const Form = () => {
             setwarnemail(true);
             setdanger(false);
         } else {
-            signInWithEmailAndPassWD(inputs);
+            signInWithEmailAndPassWD(inputs, navigate);
         }
     };
 
@@ -94,7 +94,7 @@ const Form = () => {
                                     <p data-cy="emailwarn"className={` ${danger ? "danger" : "" }`} ><i className="fa fa-warning"></i>Please enter a valid email address.</p>
                                 </div>
                                 <div className="input_text">
-                                    <input className={` ${warnpass ? "warning" : "" }`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
+                                    <input data-cy="password" className={` ${warnpass ? "warning" : "" }`} type={pass} placeholder="Enter Password" name="password" value={inputs.password} onChange={inputEvent} />
                                     <i onClick={Eye} className={`fa ${eye ? "fa-eye-slash" : "fa-eye" }`}></i>
                                 </div>
                                 <div className="recovery">

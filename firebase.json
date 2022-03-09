@@ -1,7 +1,8 @@
 {
-  "hosting": [ {
-      "target": "production",  // "blog" is the applied TARGET_NAME for the Hosting site "myapp-blog"
-      "public": "build",  // contents of this folder are deployed to the site "myapp-blog"
+  "hosting": [
+    {
+      "target": "production",
+      "public": "build",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -15,8 +16,8 @@
       ]
     },
     {
-      "target": "development",  // "blog" is the applied TARGET_NAME for the Hosting site "myapp-blog"
-      "public": "build",  // contents of this folder are deployed to the site "myapp-blog"
+      "target": "development",
+      "public": "build",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -29,5 +30,18 @@
         }
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "auth": {
+      "port": 9099,
+      "host": "127.0.0.1"
+    },
+    "database": {
+      "port": 9000,
+      "host": "127.0.0.1"
+    },
+    "ui": {
+      "enabled": true
+    }
+  }
 }
