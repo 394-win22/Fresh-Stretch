@@ -1,5 +1,7 @@
 import { React, useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
+import { Button, Col, Container, Modal, Row } from "react-bootstrap";
 import { DeleteOutlined, PlusOutlined, MinusOutlined } from "@ant-design/icons";
 
 import {
@@ -10,79 +12,26 @@ import {
 	Type as ListType,
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
-import AddFood from "../components/addFood.js";
 
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { useData, setData } from "../utils/firebase";
+import AddFood from "../AddFood/AddFood";
+
+import {
+	CalculateExpiration,
+	CalculateExpirationAbs,
+	CalculateDays,
+} from "../../utils/expiration";
+
+import { useData, setData } from "../../utils/firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+
 import "./FoodsList.css";
-
-const CalculateExpiration = (timeAdded, shelfLife) => {
-	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
-	const expDate = new Date(timeAdded + shelfLife);
-
-	const today = Date.now();
-	const dif = expDate - today;
-
-	const day = 1000 * 60 * 60 * 24;
-
-	if (dif < 0) {
-		return (
-			<span style={{ color: "#ff4d62", fontWeight: "600" }}>EXPIRED</span>
-		);
-	} else {
-		const difDays = Math.floor(dif / day);
-		if (difDays === 0) {
-			return (
-				<span style={{ color: "#ff914d", fontWeight: "600" }}>
-					TODAY
-				</span>
-			);
-		} else if (difDays <= 3) {
-			return (
-				<span style={{ color: "#ff914d", fontWeight: "600" }}>
-					{difDays}d
-				</span>
-			);
-		} else {
-			return difDays + "d";
-		}
-	}
-};
-
-const calcDays = (timeAdded, shelfLife) => {
-	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
-	const expDate = new Date(timeAdded + shelfLife);
-
-	const today = Date.now();
-	const dif = expDate - today;
-
-	const day = 1000 * 60 * 60 * 24;
-
-	return Math.floor(dif / day);
-};
-
-const CalculateExpirationAbs = (timeAdded, shelfLife) => {
-	shelfLife = shelfLife * 24 * 60 * 60 * 1000;
-	const expDate = new Date(timeAdded + shelfLife);
-
-	const today = Date.now();
-	const dif = expDate - today;
-
-	return dif;
-};
 
 export default function DisplayFoods({ StorageLocation }) {
 	const [showModal, setShowModal] = useState(false);
 
 	const handleClose = () => setShowModal(false);
 	const handleShow = () => setShowModal(true);
-	const handleSave = () => {
-		setShowModal(false);
-	};
+
 	const auth = getAuth();
 	let [uid, setUID] = useState(null);
 	let navigate = useNavigate();
@@ -95,9 +44,6 @@ export default function DisplayFoods({ StorageLocation }) {
 	}, [navigate]);
 	onAuthStateChanged(auth, (authuser) => {
 		if (authuser) {
-			// The user's ID, unique to the Firebase project. Do NOT use
-			// this value to authenticate with the backend server
-			// Use User.getToken() instead.
 			setUID(authuser.uid);
 		}
 	});
@@ -156,29 +102,21 @@ export default function DisplayFoods({ StorageLocation }) {
 
 	let compareItems = (item1, item2) => {
 		var item1Shelf;
-		if (foodInfo[item1[1]["Name"]]){
+		if (foodInfo[item1[1]["Name"]]) {
 			item1Shelf = foodInfo[item1[1]["Name"]]["ShelfLife"];
-		}
-		else {
+		} else {
 			item1Shelf = 2;
 		}
 
 		var item2Shelf;
-		if (foodInfo[item2[1]["Name"]]){
+		if (foodInfo[item2[1]["Name"]]) {
 			item2Shelf = foodInfo[item2[1]["Name"]]["ShelfLife"];
-		}
-		else {
+		} else {
 			item2Shelf = 2;
 		}
 
-		var x = CalculateExpirationAbs(
-			item1[1]["TimeAdded"],
-			item1Shelf
-		);
-		var y = CalculateExpirationAbs(
-			item2[1]["TimeAdded"],
-			item2Shelf
-		);
+		var x = CalculateExpirationAbs(item1[1]["TimeAdded"], item1Shelf);
+		var y = CalculateExpirationAbs(item2[1]["TimeAdded"], item2Shelf);
 		return x < y ? -1 : x > y ? 1 : 0;
 	};
 
@@ -199,13 +137,11 @@ export default function DisplayFoods({ StorageLocation }) {
 		}
 	};
 
+	var currIcon = "/icons/Other.svg";
+	var currShelfLife = 2;
 	if (currFoodItem && foodInfo[currFoodItem[1]["Name"]]) {
-		var currIcon = foodInfo[currFoodItem[1]["Name"]]["Icon"];
-		var currShelfLife = foodInfo[currFoodItem[1]["Name"]]["ShelfLife"]
-	}
-	else {
-		var currIcon = "/icons/Other.svg";
-		var currShelfLife = 2;
+		currIcon = foodInfo[currFoodItem[1]["Name"]]["Icon"];
+		currShelfLife = foodInfo[currFoodItem[1]["Name"]]["ShelfLife"];
 	}
 
 	return (
@@ -237,22 +173,27 @@ export default function DisplayFoods({ StorageLocation }) {
 							</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							{ (foodInfo[currFoodItem[1]["Name"]]) && ( <>
-								<h3>How to tell if gone bad</h3>
-								<ul>
-									<li>
-										{foodInfo[currFoodItem[1]["Name"]]["Bad"]}
-									</li>
-								</ul>
-								<h3>Tips for Storage</h3>
-								<ul>
-									{foodInfo[currFoodItem[1]["Name"]]["Tips"].map(
-										(tip) => {
+							{foodInfo[currFoodItem[1]["Name"]] && (
+								<>
+									<h3>How to tell if gone bad</h3>
+									<ul>
+										<li>
+											{
+												foodInfo[
+													currFoodItem[1]["Name"]
+												]["Bad"]
+											}
+										</li>
+									</ul>
+									<h3>Tips for Storage</h3>
+									<ul>
+										{foodInfo[currFoodItem[1]["Name"]][
+											"Tips"
+										].map((tip) => {
 											return <li>{tip}</li>;
-										}
-									)}
-								</ul>
-							</>
+										})}
+									</ul>
+								</>
 							)}
 							<form>
 								<label>
@@ -280,7 +221,7 @@ export default function DisplayFoods({ StorageLocation }) {
 											className="form-control input-number"
 											value={
 												parseInt(
-													calcDays(
+													CalculateDays(
 														currFoodItem[1][
 															"TimeAdded"
 														],
@@ -365,14 +306,13 @@ export default function DisplayFoods({ StorageLocation }) {
 					{Object.entries(userFood)
 						.sort(compareItems)
 						.map((item) => {
+							var itemIcon = "/icons/Other.svg";
+							var itemShelfLife = 2;
 
 							if (foodInfo[item[1]["Name"]]) {
-								var itemIcon = foodInfo[item[1]["Name"]]["Icon"];
-								var itemShelfLife = foodInfo[item[1]["Name"]]["ShelfLife"];
-							}	
-							else {
-								var itemIcon = "/icons/Other.svg";
-								var itemShelfLife = 2;
+								itemIcon = foodInfo[item[1]["Name"]]["Icon"];
+								itemShelfLife =
+									foodInfo[item[1]["Name"]]["ShelfLife"];
 							}
 
 							return (
