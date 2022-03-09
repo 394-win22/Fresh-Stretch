@@ -155,13 +155,29 @@ export default function DisplayFoods({ StorageLocation }) {
 	if (foodInfoLoading) return <h1>Loading list of foods...</h1>;
 
 	let compareItems = (item1, item2) => {
+		var item1Shelf;
+		if (foodInfo[item1[1]["Name"]]){
+			item1Shelf = foodInfo[item1[1]["Name"]]["ShelfLife"];
+		}
+		else {
+			item1Shelf = 2;
+		}
+
+		var item2Shelf;
+		if (foodInfo[item2[1]["Name"]]){
+			item2Shelf = foodInfo[item2[1]["Name"]]["ShelfLife"];
+		}
+		else {
+			item2Shelf = 2;
+		}
+
 		var x = CalculateExpirationAbs(
 			item1[1]["TimeAdded"],
-			foodInfo[item1[1]["Name"]]["ShelfLife"]
+			item1Shelf
 		);
 		var y = CalculateExpirationAbs(
 			item2[1]["TimeAdded"],
-			foodInfo[item2[1]["Name"]]["ShelfLife"]
+			item2Shelf
 		);
 		return x < y ? -1 : x > y ? 1 : 0;
 	};
@@ -183,6 +199,15 @@ export default function DisplayFoods({ StorageLocation }) {
 		}
 	};
 
+	if (currFoodItem && foodInfo[currFoodItem[1]["Name"]]) {
+		var currIcon = foodInfo[currFoodItem[1]["Name"]]["Icon"];
+		var currShelfLife = foodInfo[currFoodItem[1]["Name"]]["ShelfLife"]
+	}
+	else {
+		var currIcon = "/icons/Other.svg";
+		var currShelfLife = 2;
+	}
+
 	return (
 		<>
 			<Container>
@@ -198,11 +223,7 @@ export default function DisplayFoods({ StorageLocation }) {
 									}}
 								>
 									<object
-										data={
-											foodInfo[currFoodItem[1]["Name"]][
-												"Icon"
-											]
-										}
+										data={currIcon}
 										width="35"
 										height="35"
 										aria-label="food-icon"
@@ -216,20 +237,23 @@ export default function DisplayFoods({ StorageLocation }) {
 							</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<h3>How to tell if gone bad</h3>
-							<ul>
-								<li>
-									{foodInfo[currFoodItem[1]["Name"]]["Bad"]}
-								</li>
-							</ul>
-							<h3>Tips for Storage</h3>
-							<ul>
-								{foodInfo[currFoodItem[1]["Name"]]["Tips"].map(
-									(tip) => {
-										return <li>{tip}</li>;
-									}
-								)}
-							</ul>
+							{ (foodInfo[currFoodItem[1]["Name"]]) && ( <>
+								<h3>How to tell if gone bad</h3>
+								<ul>
+									<li>
+										{foodInfo[currFoodItem[1]["Name"]]["Bad"]}
+									</li>
+								</ul>
+								<h3>Tips for Storage</h3>
+								<ul>
+									{foodInfo[currFoodItem[1]["Name"]]["Tips"].map(
+										(tip) => {
+											return <li>{tip}</li>;
+										}
+									)}
+								</ul>
+							</>
+							)}
 							<form>
 								<label>
 									<h3>Edit Days</h3>
@@ -260,11 +284,7 @@ export default function DisplayFoods({ StorageLocation }) {
 														currFoodItem[1][
 															"TimeAdded"
 														],
-														foodInfo[
-															currFoodItem[1][
-																"Name"
-															]
-														]["ShelfLife"]
+														currShelfLife
 													)
 												) + changeDays
 											}
@@ -345,6 +365,16 @@ export default function DisplayFoods({ StorageLocation }) {
 					{Object.entries(userFood)
 						.sort(compareItems)
 						.map((item) => {
+
+							if (foodInfo[item[1]["Name"]]) {
+								var itemIcon = foodInfo[item[1]["Name"]]["Icon"];
+								var itemShelfLife = foodInfo[item[1]["Name"]]["ShelfLife"];
+							}	
+							else {
+								var itemIcon = "/icons/Other.svg";
+								var itemShelfLife = 2;
+							}
+
 							return (
 								<SwipeableListItem
 									trailingActions={trailingActions(
@@ -363,11 +393,7 @@ export default function DisplayFoods({ StorageLocation }) {
 									>
 										<div className="itemColumn">
 											<object
-												data={
-													foodInfo[item[1]["Name"]][
-														"Icon"
-													]
-												}
+												data={itemIcon}
 												width="75"
 												height="75"
 												aria-label="food-icon"
@@ -379,9 +405,7 @@ export default function DisplayFoods({ StorageLocation }) {
 										<div className="itemColumn">
 											{CalculateExpiration(
 												item[1]["TimeAdded"],
-												foodInfo[item[1]["Name"]][
-													"ShelfLife"
-												]
+												itemShelfLife
 											)}
 										</div>
 									</div>
