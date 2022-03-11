@@ -79,10 +79,6 @@ const Form = () => {
                         </div>
     
                         <div className="right-side">
-                            {/* <div className="register">
-                                <p>Not a member? <a href="#">Register Now</a></p>
-                            </div> */}
-
                             <div className="logo-login">
                                 <object data="Logo1.svg" width="240" height="125" text-align="center" aria-label="Logo"></object>
                             </div>
@@ -108,8 +104,6 @@ const Form = () => {
                             <hr />
                             <div className="boxes-login">
                                 <span onClick={() => signInWithGoogle(navigate)}><img src="https://imgur.com/XnY9cKl.png" alt="Google Logo" /></span>
-                                {/* <span><img src="https://imgur.com/ODlSChL.png" /></span>
-                                <span><img src="https://imgur.com/mPBRdQt.png" /></span> */}
                             </div>
                         </div>
                     </div>

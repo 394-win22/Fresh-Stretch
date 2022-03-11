@@ -67,7 +67,6 @@ const UserBox = () => {
 					</button>
 					<span className="name mt-3">{displayName}</span>
 					<span className="idd">{email}</span>
-					{/* <div className="d-flex flex-row justify-content-center align-items-center gap-2"> <span className="idd1">{uid}</span> <span><i className="fa fa-copy"></i></span> </div> */}
 					<div className=" d-flex mt-2">
 						<Button variant="contained" onClick={handleEmail}>
 							Email
