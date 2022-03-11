@@ -11,7 +11,6 @@ import FridgePage from "./pages/FridgePage";
 import PantryPage from "./pages/PantryPage";
 import FreezerPage from "./pages/FreezerPage";
 import UserPage from "./pages/UserPage";
-import { useUserState } from "./utils/firebase";
 
 function App() {
 	return (
