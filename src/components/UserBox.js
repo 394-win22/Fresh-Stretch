@@ -14,7 +14,7 @@ const UserBox = () => {
 	let [photoURL, setPhotoURL] = useState(
 		"https://identicons.github.com/jasonlong.png"
 	);
-	let [emailVerified, setEmailVerified] = useState(false);
+
 	let [creationTime, setCreationTime] = useState([]);
 
 	onAuthStateChanged(auth, (authuser) => {
@@ -29,7 +29,7 @@ const UserBox = () => {
 			if (authuser.photoURL) {
 				setPhotoURL(authuser.photoURL);
 			}
-			setEmailVerified(authuser.emailVerified);
+	
 			let creationTimeArray = authuser.metadata.creationTime.split(" ");
 			setCreationTime(creationTimeArray[2] + " " + creationTimeArray[3]);
 		}
