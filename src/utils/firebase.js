@@ -26,6 +26,21 @@ const firebaseConfig = {
 	appId: "1:996857465580:web:edd34e785e920f3cdfb3c9",
 };
 
+const firebase = initializeApp(firebaseConfig)
+const auth = getAuth(firebase);
+ const app = initializeApp(firebaseConfig);
+ const database = getDatabase(app);
+ export const storage = getStorage(app);
+
+if (window.Cypress) {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "9etFdDdg3D9vFoxys29tKOUZlLet", "email": "test2@a.com", "email_verified": true}'
+  ));
+}
+
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig)
 const auth = getAuth(firebase);

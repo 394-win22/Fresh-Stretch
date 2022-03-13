@@ -1,5 +1,5 @@
 /* globals cy */
-    
+
 describe ('Test App', () => {
 
   it ('launches', () => {
@@ -13,10 +13,11 @@ describe ('Test App', () => {
       cy.get('[data-cy=signinbutton]').click();
     });
 
-  // it ('triggers wrong email', () => {
-  //     cy.visit ('/');
-  //     cy.get('[data-cy=email]').type('Hello') 
-  //     cy.get('[data-cy=emailwarn]').should('contain', 'Please enter a valid email address.');
-  //   });
 
-});
+    // it ('triggers wrong email', () => {
+    //     cy.visit ('/');
+    //     cy.get('[data-cy=email]').type('Hello')
+    //     cy.get('[data-cy=emailwarn]').should('contain', 'Please enter a valid email address.');
+    //   });
+
+  });
