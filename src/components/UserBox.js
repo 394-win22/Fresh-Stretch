@@ -30,10 +30,8 @@ const UserBox = () => {
 				setPhotoURL(authuser.photoURL);
 			}
 			setEmailVerified(authuser.emailVerified);
-			console.log("Email Verified: ", emailVerified);
 			let creationTimeArray = authuser.metadata.creationTime.split(" ");
 			setCreationTime(creationTimeArray[2] + " " + creationTimeArray[3]);
-
 		}
 	});
 
