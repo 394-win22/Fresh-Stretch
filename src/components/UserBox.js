@@ -14,7 +14,7 @@ const UserBox = () => {
 	let [photoURL, setPhotoURL] = useState(
 		"https://identicons.github.com/jasonlong.png"
 	);
-	let [uid, setUID] = useState("unknown");
+	
 	let [emailVerified, setEmailVerified] = useState(false);
 	let [creationTime, setCreationTime] = useState([]);
 
@@ -38,7 +38,7 @@ const UserBox = () => {
 			// The user's ID, unique to the Firebase project. Do NOT use
 			// this value to authenticate with the backend server
 			// Use User.getToken() instead.
-			setUID(authuser.uid);
+			
 		}
 	});
 
