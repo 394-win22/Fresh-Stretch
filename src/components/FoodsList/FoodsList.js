@@ -185,7 +185,7 @@ export default function DisplayFoods({ StorageLocation }) {
 											}
 										</li>
 									</ul>
-									<h3>Tips for Storage</h3>
+									<h3 data-cy="tips">Tips for Storage</h3>
 									<ul>
 										{foodInfo[currFoodItem[1]["Name"]][
 											"Tips"
@@ -200,7 +200,7 @@ export default function DisplayFoods({ StorageLocation }) {
 									<h3>Edit Days</h3>
 									<div className="input-group">
 										<span className="input-group-btn">
-											<button
+											<button data-cy="minusdays"
 												type="button"
 												className="btn btn-secondary btn-number"
 												data-type="minus"
@@ -271,7 +271,7 @@ export default function DisplayFoods({ StorageLocation }) {
 							>
 								Delete Item
 							</Button>
-							<Button
+							<Button data-cy="save"
 								style={{
 									backgroundColor: "#80B470",
 									borderColor: "#80B470",
@@ -323,7 +323,7 @@ export default function DisplayFoods({ StorageLocation }) {
 									)}
 									key={item[0]}
 								>
-									<div
+									<div data-cy="foodlist"
 										className="itemContent"
 										onClick={() => {
 											setCurrFoodItem(item);
@@ -342,7 +342,7 @@ export default function DisplayFoods({ StorageLocation }) {
 										<div className="itemColumn">
 											{item[1]["Name"]}
 										</div>
-										<div className="itemColumn">
+										<div className="itemColumn" data-cy="expiration">
 											{CalculateExpiration(
 												item[1]["TimeAdded"],
 												itemShelfLife

@@ -11,6 +11,7 @@ describe ('Test App', () => {
       cy.get('[data-cy=email]').type('test@a.com')
       cy.get('[data-cy=password]').type('123456')
       cy.get('[data-cy=signinbutton]').click();
+
     });
 
 
