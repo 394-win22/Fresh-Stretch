@@ -61,6 +61,7 @@ const AddFood = ({ StorageLocation }) => {
 				onClick={handleClickOpen}
 				size={45}
 				color="#80b470"
+				data-cy="addfood"
 			></PlusSquareFill>
 
 			<Dialog open={open} onClose={handleClose}>
