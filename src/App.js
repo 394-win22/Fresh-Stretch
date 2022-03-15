@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -16,15 +16,53 @@ function App() {
 	return (
 		<div>
 			<BrowserRouter>
-			
 				<Routes>
 					<Route exact path="/login" element={<LoginPage />} />
-					<Route path="/" element={<><Header /><FridgePage /><Footer/></>} />
-					<Route path="/freezer" element={<><Header /><FreezerPage /><Footer/></>} />
-					<Route path="/pantry" element={<><Header /><PantryPage /><Footer/></>} />
-					<Route path="/user" element={<><Header/><UserPage /><Footer/></>} />
+					<Route
+						exact
+						path="/"
+						element={
+							<>
+								<Header />
+								<FridgePage />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						exact
+						path="/freezer"
+						element={
+							<>
+								<Header />
+								<FreezerPage />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						exact
+						path="/pantry"
+						element={
+							<>
+								<Header />
+								<PantryPage />
+								<Footer />
+							</>
+						}
+					/>
+					<Route
+						exact
+						path="/user"
+						element={
+							<>
+								<Header />
+								<UserPage />
+								<Footer />
+							</>
+						}
+					/>
 				</Routes>
-		
 			</BrowserRouter>
 		</div>
 	);

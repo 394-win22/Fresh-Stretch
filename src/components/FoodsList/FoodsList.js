@@ -200,7 +200,8 @@ export default function DisplayFoods({ StorageLocation }) {
 									<h3>Edit Days</h3>
 									<div className="input-group">
 										<span className="input-group-btn">
-											<button data-cy="minusdays"
+											<button
+												data-cy="minusdays"
 												type="button"
 												className="btn btn-secondary btn-number"
 												data-type="minus"
@@ -260,6 +261,7 @@ export default function DisplayFoods({ StorageLocation }) {
 							}}
 						>
 							<Button
+								data-cy="delete"
 								variant="secondary"
 								onClick={() => {
 									handleClose();
@@ -271,7 +273,8 @@ export default function DisplayFoods({ StorageLocation }) {
 							>
 								Delete Item
 							</Button>
-							<Button data-cy="save"
+							<Button
+								data-cy="save"
 								style={{
 									backgroundColor: "#80B470",
 									borderColor: "#80B470",
@@ -323,7 +326,8 @@ export default function DisplayFoods({ StorageLocation }) {
 									)}
 									key={item[0]}
 								>
-									<div data-cy="foodlist"
+									<div
+										data-cy="foodlist"
 										className="itemContent"
 										onClick={() => {
 											setCurrFoodItem(item);
@@ -342,7 +346,10 @@ export default function DisplayFoods({ StorageLocation }) {
 										<div className="itemColumn">
 											{item[1]["Name"]}
 										</div>
-										<div className="itemColumn" data-cy="expiration">
+										<div
+											className="itemColumn"
+											data-cy="expiration"
+										>
 											{CalculateExpiration(
 												item[1]["TimeAdded"],
 												itemShelfLife

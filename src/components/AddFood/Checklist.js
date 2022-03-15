@@ -22,9 +22,9 @@ const Checklist = ({ foodInfo, checked, setOtherName }) => {
 
 	return (
 		<FormGroup>
-			{Object.entries(foodInfo).map((value) => {
+			{Object.entries(foodInfo).map((value, index) => {
 				numFoods += 1;
-				const labelId = `checkbox-list-secondary-label-${value}`;
+				const labelId = `checkbox-list-secondary-label-${index}`;
 				return (
 					<FormControlLabel
 						key={value[0]}
@@ -33,6 +33,7 @@ const Checklist = ({ foodInfo, checked, setOtherName }) => {
 						label={value[1][0]}
 						labelPlacement="start"
 						onChange={handleToggle(value[0])}
+						data-cy={`food-${index}`}
 					/>
 				);
 			})}
