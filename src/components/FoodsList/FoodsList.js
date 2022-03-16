@@ -87,7 +87,7 @@ export default function DisplayFoods({ StorageLocation }) {
 			>
 				<Row className="justify-content-center align-self-center text-center">
 					<AddFood StorageLocation={StorageLocation} />
-					<p className="mt-2">
+					<p data-cy="empty-message" className="mt-2">
 						Your {StorageLocation.toLowerCase()} is empty.
 						<br />
 						Click on the + icon to add some items.
