@@ -1,6 +1,6 @@
 # Fresh Stretch 
 
-An app to track expiration dates of food items in your kitchen, also includes tips on how to prolong shelf life and alerts for when things expire
+Fresh Stretch is a web app which helps users track expiration dates of food items in their kitchen. Each item also includes tips on how to prolong shelf life and alerts for when things are close to expiring. 
 
 ## Available Scripts
 
