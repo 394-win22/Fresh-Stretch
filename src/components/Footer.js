@@ -20,16 +20,19 @@ const tabs = [
 		route: "/pantry",
 		icon: Inventory,
 		label: "Pantry",
+		cypress: "pantry",
 	}, 
 	{
 		route: "/",
 		icon: Kitchen,
 		label: "Fridge",
+		cypress: "fridge",
 	}, 
 	{
 		route: "/freezer",
 		icon: AcUnit,
 		label: "Freezer",
+		cypress: "freezer",
 	}, 
 	{
 		route: "/user",
@@ -95,6 +98,7 @@ const Footer = () => {
 								to={tab.route}
 								label={tab.label}
 								icon={<Icon />}
+								data-cy={tab.cypress}
 							/>
 						);
 					})}
