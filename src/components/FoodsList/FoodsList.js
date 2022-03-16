@@ -343,7 +343,8 @@ export default function DisplayFoods({ StorageLocation }) {
 												aria-label="food-icon"
 											/>
 										</div>
-										<div className="itemColumn">
+										<div className="itemColumn"
+											data-cy="foodname">
 											{item[1]["Name"]}
 										</div>
 										<div

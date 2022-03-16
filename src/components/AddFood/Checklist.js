@@ -46,11 +46,13 @@ const Checklist = ({ foodInfo, checked, setOtherName }) => {
 						placeholder="Other"
 						variant="standard"
 						size="small"
+						data-cy={'other'}
 						onBlur={(ev) => {
 							setOtherName(ev.target.value);
 						}}
 					/>
 				}
+				data-cy={'otherfood'}
 				labelPlacement="start"
 				onChange={handleToggle(numFoods + 1)}
 			/>
