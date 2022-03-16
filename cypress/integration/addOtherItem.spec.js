@@ -17,6 +17,21 @@ describe ('Add other item to fridge', () => {
         cy.url().should('eq', 'http://localhost:3000/')
       });
 
+      it("clears all items", () => {
+		deleteItems();
+		cy.get(".swipeable-list-item").should("not.exist");
+	});
+
+	const deleteItems = () => {
+		cy.get("[data-cy=foodlist]").first().click({ force: true });
+		cy.get("[data-cy=delete]").click();
+		cy.get("body").then(($body) => {
+			if ($body.find(".swipeable-list-item").length > 0) {
+				deleteItems();
+			}
+		});
+	};
+
       it ('adds other item without clicking check', () => {
         cy.get("[data-cy=addfood]").click({ force: true });
         cy.get("[data-cy=other]").type('Test')
