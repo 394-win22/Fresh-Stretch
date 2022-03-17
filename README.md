@@ -21,4 +21,4 @@ None
 Currently the application does not automatically send emails.
 
 ## Styling Library
-This app uses React Bootstrap as well as Ant Design
+This app uses React Bootstrap as well as Ant Design.
